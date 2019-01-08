@@ -1,0 +1,49 @@
+.slides .ref {
+font-size: 15px;
+margin-top: -40px;
+color: #999999;
+}
+
+.ref a:visited, .ref a:link {
+color: #999999;
+}
+
+.framed {
+    border: 1px solid #bfbfbf !important;
+}
+
+img {
+    border: 0 !important;
+    box-shadow: none !important;
+    background: none !important;
+}
+
+footer {
+    font-family: Helvetica, sans-serif;
+    position: fixed;
+    left: 1rem;
+    bottom: 0px;
+    z-index: 31;
+    font-size: 12px;
+    line-height: 1;
+}
+
+@media print {
+    footer {
+        left: auto;
+        right: 1rem;
+    }
+    footer p {
+        font-size: 8pt !important;
+        font-style: italic;
+    }
+    footer a:link {
+        text-decoration: none;
+        font-weight: normal;
+    }
+    .slides .credit {
+        position: relative;
+        top: 10px;
+        left: 1%;
+    }
+}

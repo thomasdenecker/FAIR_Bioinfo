@@ -1,0 +1,693 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+	<title>Club Bioinfo</title>
+
+	<link rel="stylesheet" href="assets/reveal.js/css/reveal.css">
+	<link rel="stylesheet" href="assets/reveal.js/css/theme/white.css">
+
+	<link rel="stylesheet" href="assets/css/style.css">
+
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+	<!-- Theme used for syntax highlighting of code -->
+	<link rel="stylesheet" href="assets/reveal.js/lib/css/zenburn.css">
+
+	<!-- Printing and PDF exports -->
+	<script>
+		var link = document.createElement('link');
+		link.rel = 'stylesheet';
+		link.type = 'text/css';
+		link.href = window.location.search.match(/print-pdf/gi) ? 'assets/reveal.js/css/print/pdf.css' : 'assets/reveal.js/css/print/paper.css';
+		document.getElementsByTagName('head')[0].appendChild(link);
+	</script>
+</head>
+
+<body>
+	<div class="reveal">
+		<div class="slides">
+			<section data-transition="slide">
+				<h1>Git et Github</h1>
+				<h3>Thomas Denecker</h3>
+				<div class="row" style="height:100px;margin:0 25%;">
+					<div class="col-3 align-self-center">
+						<a href="https://github.com/thomasdenecker" target="_blank"><img src="assets/img/github.png" height="75px"></img></a>
+					</div>
+					<div class="col-3 align-self-center">
+						<a href="https://twitter.com/DeneckerThomas" target="_blank"><img src="assets/img/twitter.png" height="75px"></img></a>
+					</div>
+					<div class="col-3 align-self-center">
+						<img src="assets/img/mail.jpg" height="75px"></img>
+					</div>
+					<div class="col-3 align-self-center">
+						<img src="assets/img/slack.svg" height="50px">
+						</img>
+					</div>
+				</div>
+				<p>26/11/2018</p>
+				<p> Resources : <a href="https://omics-school.github.io/topo-git-github/#/">Pierre Poulain</a> </p>
+				<div class="row" style="height:100px; margin-top:50px;">
+					<div class="col-4 align-self-center">
+						<img src="assets/img/ED.jpg">
+						</img>
+					</div>
+					<div class="col-4 align-self-center">
+						<img src="assets/img/I2BC.jpg" height="150px">
+						</img>
+					</div>
+					<div class="col-4 align-self-center">
+						<img src="assets/img/CNRS.png" height="100px">
+						</img>
+					</div>
+				</div>
+			</section>
+
+			<section data-transition="slide">
+				<a href="http://phdcomics.com/comics/archive.php?comicid=1531"><img src="assets/img/comics.gif" height="620px" style="border: 0px;background:white; box-shadow: 0 0 0px rgba(0, 0, 0, 0.15);"></a>
+				</img>
+			</section>
+
+			<section data-transition="slide">
+				<h2>Votre code ... 6 mois après</h2>
+			</section>
+
+			<section data-transition="slide">
+				<h2>Lequel choisir ?</h2>
+				<pre><code class="bash nohighlight" data-trim contenteditable>
+					$ ls
+					R_script_03-04-2018.R        R_script_final_modified2.R
+					R_script_17-06-2018.R        R_script_final.R
+					R_script_18-03-2018.R        R_script_OK.R
+					R_script_final_2018-09-20.R  R_script.R
+					R_script_final_final.R       R_script_really_final.R
+				</code></pre>
+			</section>
+
+			<section data-transition="slide">
+				<h2>Des solutions?</h2>
+				<ul>
+					<li>Trier par date ? </li>
+					<li>Trier par taille ? </li>
+				</ul>
+				<br><br> Pas des solutions viables...
+			</section>
+
+			<section data-transition="slide">
+				<div class="container" style="align-items: center;">
+					<div class="row">
+						<div class="col-6">
+							<img src="assets/img/ten-simple-rules-repro-comput-research.png" height="650px" class="framed">
+							</img>
+							<div class="ref" style="margin-top:-20px;">
+								<a href="https://doi.org/10.1371/journal.pcbi.1003285">DOI 10.1371/journal.pcbi.1003285</a>
+							</div>
+						</div>
+						<div class="col-6 align-self-center" style="font-style:italic;">
+							"Rule 4: Version Control All Custom Scripts"
+						</div>
+					</div>
+				</div>
+
+			</section>
+
+			<section data-transition="slide">
+				<h2>Qui ? Quand ? Quoi ?</h2>
+			</section>
+
+			<section data-transition="slide">
+				<h2>Gestionnaire de versions</h2>
+				<img src="assets/img/git.png" height="350px" style="border: 0px;background:white; box-shadow: 0 0 0px rgba(0, 0, 0, 0.15);">
+				</img>
+				<h3>Git</h3>
+			</section>
+
+			<section data-transition="slide">
+				<div style="text-align:left;">
+					<div style="font-weight:bold;">
+						When it comes to reproducible science, Git is code for success ... and the key to its popularity is the online repository and social network, GitHub.
+					</div>
+					J. Perkel, <a href="https://www.natureindex.com/news-blog/when-it-comes-to-reproducible-science-git-is-code-for-success">Nature Index, 2018</a>
+
+					<div class="fragment" style="font-style:italic;margin-top:40px;">
+						“Most researchers are primarily collaborating with themselves,” [Tracy] Teal explains. “So, we teach it from the perspective of being helpful to a ‘future you’."
+					</div>
+				</div>
+			</section>
+
+			<section data-transition="slide">
+				<h2>Il ne reste plus qu'à essayer!</h2>
+				<pre class="bash"><code class="hljs" data-trim contenteditable>
+					# Création d'un nouveau répertoire
+					$ cd /Zone/De/Stockage/Du/Répertoire
+					$ mkdir gitFolder
+					$ cd gitFolder
+
+					# Définir son identité
+					$ git config --global user.name "Prénom Nom"
+					$ git config --global user.email "moi@mail.com"
+
+					# Initialiser git
+					$ git init
+				</code></pre>
+			</section>
+
+			<section data-transition="slide">
+				<h2>Git a-t-il détecté des changements ?</h2>
+				<pre class="bash"><code class="hljs" data-trim contenteditable>
+					$ git statut
+
+					On branch master
+
+					No commits yet
+
+					nothing to commit (create/copy files and use "git add" to track)
+				</code></pre>
+			</section>
+
+
+			<section data-transition="slide">
+				<h2>Création d'un fichier</h2>
+				<pre class="bash"><code class="hljs" data-trim contenteditable>
+					$ nano test.txt
+				</code></pre> Contenu du fichier
+				<pre class="bash"><code class="hljs" data-trim contenteditable>
+					$ cat test.txt
+					Mon premier fichier sur Git
+				</code></pre>
+			</section>
+
+			<section data-transition="slide">
+				<h2>Git a-t-il détecté des changements ?</h2>
+				<pre class="bash"><code class="hljs" data-trim contenteditable>
+					$ git statut
+					On branch master
+
+					No commits yet
+
+					Untracked files:
+					(use "git add file..." to include in what will be committed)
+
+					    test.txt
+
+					nothing added to commit but untracked files present (use "git add" to track)
+				</code></pre>
+			</section>
+
+			<section data-transition="slide">
+				<h2>Ajouter les changements</h2>
+				<pre class="bash"><code class="hljs" data-trim contenteditable>
+					$ git add test.txt
+					$ git statut
+					On branch master
+
+					No commits yet
+
+					Changes to be committed:
+					  (use "git rm --cached file..." to unstage)
+
+					        new file:   test.txt
+				</code></pre>
+			</section>
+
+			<section data-transition="slide">
+				<h2>Ajouter les changements</h2>
+				<pre class="bash"><code class="hljs" data-trim contenteditable>
+					$ git commit -m "My first commit"
+					[master (root-commit) b4a7d66] My first commit
+					1 file changed, 1 insertion(+)
+					create mode 100644 test.txt
+
+					$ git statut
+					On branch master
+					nothing to commit, working tree clean
+				</code></pre>
+			</section>
+
+			<section data-transition="slide">
+				<h2>Modifier le fichier</h2>
+				<pre class="bash"><code class="hljs" data-trim contenteditable>
+					$ cat test.txt
+					Mon premier test sur Git
+
+					Modification du texte.
+				</code></pre>
+			</section>
+
+			<section data-transition="slide">
+				<h2>Des changements?</h2>
+				<pre class="bash"><code class="hljs" data-trim contenteditable>
+					$ git statut
+					On branch master
+					Changes not staged for commit:
+						(use "git add file..." to update what will be committed)
+						(use "git checkout -- file..." to discard changes in working directory)
+
+									modified:   test.txt
+
+					no changes added to commit (use "git add" and/or "git commit -a")
+				</code></pre>
+			</section>
+
+			<section data-transition="slide">
+				<h2>Des changements?</h2>
+				<pre><code class="diff hljs" data-trim contenteditable>
+					$ git diff
+					The file will have its original line endings in your working directory.
+					diff --git a/test.txt b/test.txt
+					index cd1ad34..32a6825 100644
+					--- a/test.txt
+					+++ b/test.txt
+					@@ -1 +1,3 @@
+					-Mon premier fichier sur Git
+					+Mon premier test sur Git
+					+
+					+Modification du texte.
+				</code></pre>
+			</section>
+
+			<section data-transition="slide">
+				<h2>Ajouter les changements</h2>
+				<pre class="bash"><code class="hljs" data-trim contenteditable>
+					$ git add  test.txt
+					$ git commit -m "My first commit"
+					[master (root-commit) b4a7d66] My first commit
+					1 file changed, 1 insertion(+)
+					create mode 100644 test.txt
+
+					$ git statut
+					On branch master
+					nothing to commit, working tree clean
+				</code></pre>
+			</section>
+
+			<section data-transition="slide">
+				<h2>Liste des commits</h2>
+				<pre class="bash"><code class="hljs" data-trim contenteditable>
+					$ git log
+					commit bbea074d0b2f6335f99e2d54c6a7092adb08f337 (HEAD -> master)
+					Author: thomasdenecker thomas.denecker@gmail.com
+					Date:   Tue Nov 13 15:15:59 2018 +0100
+
+					    My second commit
+
+					commit b4a7d66afb8066bced7a0d6113ab26a519b1b6be
+					Author: thomasdenecker thomas.denecker@gmail.com
+					Date:   Tue Nov 13 14:49:29 2018 +0100
+
+					    My first commit
+				</code></pre>
+			</section>
+
+			<section data-transition="slide">
+				<h2>Les branches</h2> Une "copie" du projet initial (master) pour réaliser des modifications sans impacter le projet principal.
+				<pre class="bash"><code class="hljs" data-trim contenteditable>
+					$ git branch
+					* master
+
+					$ git branch modifications
+					$ git branch
+					* master
+					  modification
+
+				</code></pre>
+			</section>
+
+			<section data-transition="slide">
+				<h2>Changer de branches</h2>
+				<pre class="bash"><code class="hljs" data-trim contenteditable>
+					$ git checkout modification
+					Switched to branch 'modification'
+
+					$ git branch
+					  master
+					* modification
+				</code></pre>
+			</section>
+
+			<section data-transition="slide">
+				<h2>Faire des modifications dans cette branche</h2>
+				<pre class="bash"><code class="hljs" data-trim contenteditable>
+					$ cat test.tex
+					Mon premier test sur Git
+
+					Modification du texte.
+
+					Modification dans la branche.
+
+				</code></pre>
+			</section>
+
+			<section data-transition="slide">
+				<h2>Différences avec master</h2>
+				<pre><code class="diff hljs" data-trim contenteditable>
+					$ git diff master
+					warning: LF will be replaced by CRLF in test.txt.
+					The file will have its original line endings in your working directory.
+					diff --git a/test.txt b/test.txt
+					index 32a6825..ea7aaba 100644
+					--- a/test.txt
+					+++ b/test.txt
+					@@ -1,3 +1,6 @@
+					 Mon premier test sur Git
+
+					 Modification du texte.
+					+
+					+Modification dans la branche.
+					+
+				</code></pre>
+			</section>
+
+			<section data-transition="slide">
+				<h2>Ajouter ces changements</h2>
+				<pre class="bash"><code class="hljs" data-trim contenteditable>
+					$ git add test.txt
+					$ git commit -m "Changement dans la branche."
+					[modification c334c8b] Changement dans la branche
+ 					1 file changed, 3 insertions(+)
+				</code></pre>
+			</section>
+
+			<section data-transition="slide">
+				<h2>Liste des commits</h2>
+				<pre class="bash"><code class="hljs" data-trim contenteditable>
+					$ git log
+					commit c334c8b34368e9be690b9884d9ba18e8c64407c1 (HEAD -> modification)
+					Author: thomasdenecker thomas.denecker@gmail.com
+					Date:   Tue Nov 13 16:01:08 2018 +0100
+
+					    Changement dans la branche
+
+					commit bbea074d0b2f6335f99e2d54c6a7092adb08f337 (master)
+					Author: thomasdenecker thomas.denecker@gmail.com
+					Date:   Tue Nov 13 15:15:59 2018 +0100
+
+					    My second commit
+
+					commit b4a7d66afb8066bced7a0d6113ab26a519b1b6be
+					Author: thomasdenecker thomas.denecker@gmail.com
+					Date:   Tue Nov 13 14:49:29 2018 +0100
+
+					    My first commit
+
+				</code></pre>
+			</section>
+
+
+			<section data-transition="slide">
+				<h2>Basculer les changements</h2> Ajouter ces changements dans la branche principale (master)
+				<pre class="bash"><code class="hljs" data-trim contenteditable>
+					$ git checkout master
+					Switched to branch 'master'
+
+					$ git merge modifications
+					Updating bbea074..c334c8b
+					Fast-forward
+					test.txt | 3 +++
+					1 file changed, 3 insertions(+)
+
+					$ git branch -d modification
+					Deleted branch modification (was c334c8b).
+				</code></pre>
+			</section>
+
+			<section data-transition="slide">
+				<h2>Vérification</h2> Les changements sont dans la branche master
+				<pre class="bash"><code class="hljs" data-trim contenteditable>
+					$ git statut
+					On branch master
+					nothing to commit, working tree clean
+
+					$ cat test.txt
+					Mon premier test sur Git
+
+					Modification du texte.
+
+					Modification dans la branche.
+				</code></pre>
+			</section>
+
+
+			<section data-transition="slide">
+				<h2>dépôt distant</h2>
+				<p> Distribuer le projet sur un espace partagé</p>
+				<img src="assets/img/github.png" height="300px">
+				</img>
+				<h3>Github</h3>
+
+			</section>
+
+			<section data-transition="slide">
+				<h2>Github</h2>
+				<ol>
+					<li>Création d'un compte</li>
+					<li>Création d'un nouveau répertoire (Create a new répository)</li>
+				</ol>
+				<br><br> Privé en illimité pour les académiques
+
+			</section>
+
+			<section data-transition="slide">
+				<h2>Association du dépôt local avec le dépôt distant</h2>
+				<pre class="bash"><code class="hljs" data-trim contenteditable>
+					$ git remote add origin https://github.com/thomasdenecker/DemoGit.git
+					$ git push -u origin master
+					Counting objects: 9, done.
+					Delta compression using up to 4 threads.
+					Compressing objects: 100% (4/4), done.
+					Writing objects: 100% (9/9), 784 bytes | 261.00 KiB/s, done.
+					Total 9 (delta 0), reused 0 (delta 0)
+					remote:
+					remote: Create a pull request for 'master' on GitHub by visiting:
+					remote:      https://github.com/thomasdenecker/DemoGit/pull/new/master
+					remote:
+					To https://github.com/thomasdenecker/DemoGit.git
+					 * [new branch]      master -> master
+					Branch 'master' set up to track remote branch 'master' from 'origin'.
+
+				</code></pre>
+			</section>
+
+			<section data-transition="slide">
+				<h2>Envoyer des changements (1/2)</h2>
+				<pre class="bash"><code class="hljs" data-trim contenteditable>
+					$ cat test.txt
+					Mon premier test sur Git
+
+					Modification du texte.
+
+					Modification dans la branche.
+
+					Changements pour Github
+
+					$ git add test.txt
+					$ git commit -m "Changements pour Github"
+				</code></pre>
+			</section>
+
+			<section data-transition="slide">
+				<h2>Envoyer des changements (2/2)</h2>
+				<pre class="bash"><code class="hljs" data-trim contenteditable>
+					$ git push origin master
+					Counting objects: 3, done.
+					Delta compression using up to 4 threads.
+					Compressing objects: 100% (2/2), done.
+					Writing objects: 100% (3/3), 302 bytes | 302.00 KiB/s, done.
+					Total 3 (delta 1), reused 0 (delta 0)
+					remote: Resolving deltas: 100% (1/1), completed with 1 local object.
+					To https://github.com/thomasdenecker/DemoGit.git
+					   c334c8b..aefd13a  master -> master
+				</code></pre>
+			</section>
+
+			<section data-transition="slide">
+				<h2>Ajouter un collaborateur</h2>
+				<img src="assets/img/collaborateur.PNG" class="framed">
+				</img>
+			</section>
+
+			<section data-transition="slide">
+				<h2>Récupérer les modifications</h2> Après l'ajout d'un README sur Github
+				<pre class="bash"><code class="hljs" data-trim contenteditable>
+					$ git pull origin master
+					remote: Enumerating objects: 4, done.
+					remote: Counting objects: 100% (4/4), done.
+					remote: Compressing objects: 100% (2/2), done.
+					remote: Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
+					Unpacking objects: 100% (3/3), done.
+					From https://github.com/thomasdenecker/DemoGit
+					 * branch            master     -> FETCH_HEAD
+					   aefd13a..c17f8f4  master     -> origin/master
+					Updating aefd13a..c17f8f4
+					Fast-forward
+					 README.md | 1 +
+					 1 file changed, 1 insertion(+)
+					 create mode 100644 README.md
+				</code></pre>
+			</section>
+
+			<section data-transition="slide">
+				<h2>Déclaration d'un problème</h2> Déclaration d'une issue
+				<img src="assets/img/issue.PNG" height="500px" class="framed">
+				</img>
+			</section>
+
+			<section data-transition="slide">
+				<h2>Proposition de changements</h2>
+				<img src="assets/img/PR.PNG" height="450px" class="framed">
+				</img>
+			</section>
+
+			<section data-transition="slide">
+				<h2>Création d'un projet</h2>
+				<img src="assets/img/projet1.PNG" height="500px" class="framed">
+				</img>
+			</section>
+
+			<section data-transition="slide">
+				<h2>Exemple de projet</h2>
+				<img src="assets/img/projet2.PNG" height="500px" class="framed">
+				</img>
+			</section>
+
+			<section data-transition="slide">
+				<h2>Création d'un wiki</h2>
+				<img src="assets/img/wiki1.PNG" height="500px" class="framed">
+				</img>
+			</section>
+
+			<section data-transition="slide">
+				<h2>Exemple d'un wiki</h2>
+				<img src="assets/img/wiki2.PNG" height="500px" class="framed">
+				</img>
+			</section>
+
+			<section data-transition="slide">
+				<h2>Récupérer un autre projet</h2>
+				<pre class="bash"><code class="hljs" data-trim contenteditable>
+					$ git clone https://github.com/thomasdenecker/bPeaks-application.git
+					Cloning into 'bPeaks-application'...
+					remote: Enumerating objects: 21, done.
+					remote: Counting objects: 100% (21/21), done.
+					remote: Compressing objects: 100% (19/19), done.
+					remote: Total 616 (delta 10), reused 4 (delta 2), pack-reused 595
+					Receiving objects: 100% (616/616), 116.58 MiB | 4.08 MiB/s, done.
+					Resolving deltas: 100% (199/199), done.
+					Checking out files: 100% (210/210), done.
+				</code></pre>
+			</section>
+
+			<section data-transition="slide">
+				<h2>Bonnes pratiques</h2>
+				<h3>Que met-on dans un dépôt Git ?</h3> Des fichiers avec lesquels git peut calculer la différence entre deux versions.
+			</section>
+
+			<section data-transition="slide">
+				<h2>Que met-on dans un dépôt Git ?</h2>
+				<p style="text-align:left;">Le plus souvent des fichiers texte de taille <b>raisonnable</b>:</p>
+				<ul>
+					<li>un script R ✅</li>
+					<li>un script Python ✅</li>
+					<li>un fichier PDF ❌</li>
+					<li>un fichier fastq ❌</li>
+				</ul>
+			</section>
+
+			<section data-transition="slide">
+				<h2>La forge - I2BC</h2>
+				<img src="assets/img/forge.PNG" height="500px" class="framed">
+				</img>
+			</section>
+
+			<section data-transition="slide">
+				<h2>Ressources</h2>
+				<ul>
+					<li><a href="https://swcarpentry.github.io/git-novice/t">Version Control with Git</a> : Le cours de Software Carpentry</li>
+					<li><a href="http://cupnet.net/git-github/">Git et GitHub</a> : Le cours de Pierre Poulain</li>
+					<li><a href="https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1004947">Papier</a> : Ten Simple Rules for Taking Advantage of Git and GitHub</li>
+					<li><a href="https://youtu.be/hPfgekYUKgk">Video</a> : Débuter avec Git et Github en 30 min </li>
+				</ul>
+			</section>
+
+			<section data-transition="slide">
+				<h2>Pas si simple...</h2>
+				<img src="assets/img/XKCD.png" height="500px" class="framed">
+				</img>
+				<div class="ref" style="margin-top:-40px;">
+					<a href="https://xkcd.com/1597/">XKCD</a>
+				</div>
+			</section>
+
+			<section data-transition="slide">
+				<h2>Pour la suite ?</h2>
+				<ul>
+					<li>GitHub avancé : Intégration continue, Pages, Binder...</li>
+					<li>Jupyter : notebook et lab</li>
+					<li>Docker</li>
+					<li>...</li>
+				</ul>
+			</section>
+
+			<section data-transition="slide">
+
+			</section>
+
+		</div>
+	</div>
+
+
+	<footer>
+		<p>
+			This content is licensed under
+			<a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY 4.0</a>.
+		</p>
+	</footer>
+
+	<script src="assets/reveal.js/lib/js/head.min.js"></script>
+	<script src="assets/reveal.js/js/reveal.js"></script>
+
+	<script>
+		// More info about config & dependencies:
+		// - https://github.com/hakimel/reveal.js#configuration
+		// - https://github.com/hakimel/reveal.js#dependencies
+		Reveal.initialize({
+
+			// Display the page number of the current slide
+			slideNumber: true,
+			// Push each slide change to the browser history
+			history: true,
+
+			dependencies: [{
+					src: 'assets/reveal.js/plugin/markdown/marked.js'
+				},
+				{
+					src: 'assets/reveal.js/plugin/markdown/markdown.js'
+				},
+				{
+					src: 'assets/reveal.js/plugin/notes/notes.js',
+					async: true
+				},
+				{
+					src: 'assets/reveal.js/plugin/highlight/highlight.js',
+					async: true,
+					callback: function() {
+						hljs.initHighlightingOnLoad();
+					}
+				},
+				{
+					src: 'assets/reveal.js/plugin/math/math.js',
+					async: true
+				}
+			]
+		});
+	</script>
+
+</body>
+
+</html>
