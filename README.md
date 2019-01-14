@@ -1,20 +1,21 @@
 # Welcome !
 
-**Bienvenue Au coin d'un clavier**
+**Bienvenue à FAIR_bioinfo**
 
-Vous trouverez ici des communications réalisées lors des sessions Au coin d'un clavier. Les communications sont en français. Tout le contenu présenté existe en anglais sur internet. Nous proposons donc ici des ressources pour les francophones.
+Vous trouverez ici des communications réalisées lors des sessions FAIR_bioinfo. Les communications sont en français. Tout le contenu présenté existe déjà en anglais sur internet. Nous proposons donc ici des ressources pour les francophones.
 
 *You will find here some communications made during the I2BC Bioinformatics Club. Communications will be mainly in French. All the content presented also exists in English on the Internet. Therefore, we propose here resources for Francophones.*
 
 **Informations pratiques**
-- Quand ? : le dernier vendredi après midi de chaque mois (sauf juillet à définir)
+- Quand ? : le dernier vendredi après midi de chaque mois (sauf juillet à définir), rdv 12h30
 - Durée ? : 1h30 (questions incluses)
 - Lieu ? : Salle de conférence A.Kalogeropoulos, b. 400, campus Orsay
 
 **Objectifs**
 
-L'objectif est de proposer et d'utiliser un panel d'outils permettant la réalisation d'un projet complet de bio-info en partant de rien et aboutissant à la création d'un conteneur (technologie Docker). Le partage, la valorisation et l'analyse dynamique des données sont inclus dans le panel.
-Le projet support est une étude "core génome" à partir de 21 génomes d'E.coli.
+L'objectif est de proposer et d'utiliser un panel d'outils permettant la réalisation d'un projet complet de bio-info en partant de rien et aboutissant à la création d'un conteneur (technologie Docker). Le partage, la valorisation et l'analyse dynamique des données seront inclus dans le panel. 
+FAIR correspond à l'acronyme anglais "Findable, Accessible, Interoperable, & Reusable", initialement défini pour les données mais que nous détournons ici pour leurs protocoles d'analyse.
+Le projet support est une étude "d'expression différentielle de gènes" à partir de données RNAseq d'E.coli.
 
 **Pré-requis**
 
