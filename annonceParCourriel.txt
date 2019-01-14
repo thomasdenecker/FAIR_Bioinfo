@@ -1,0 +1,34 @@
+Bonjour,
+
+Thomas Denecker (en thèse sous la direction de Gaëlle Lelandais) et Claire Toffano-Nioche (I2BC) vous invitons à une formation pratique à un panel d'outils informatiques dont l'objectif final est de donner les lignes directrices pour concevoir la diffusion d'un protocole bioinformatique d'analyse de données. 
+
+Détails pratiques :
+- formation dispensée en français
+- chaque dernier vendredi du mois, de 12h30 à 14h, salle A.Kalogeropoulos, bât 400
+- 7 dates (ou +/- selon réactivité du public) : de janvier à juillet 2019 : 25 janvier, 22 février, 29 mars, 26 avril, 31 mai, 28 juin, et début juillet à définir 
+- possible d'apporter son propre sanwchich, mais sutout son ordinateur portable pour profiter pratiquement de la présentation
+- la dernière session est conçue comme un échange avec les formateurs pour une aide à l'application à ses propres projets 
+
+Voici quelques critères qui ont guidés la conception cette formation :
+- Facile à trouver : les outils sont des références dans leur domaine
+- Accessible : toute la formation est disponible sur git/github
+- Interopérable : nous ferons coopérer les outils ensemble
+- Réutilisable : le protocole est engegistré sous un fichier dont l'exécution rejoue l'ensemble de l'analyse
+
+Les outils (ou un équivalent fonctionnel) présentés et utilisés seront (*) :
+- git/github 
+- conda
+- docker
+- snakemake
+- Jupyter
+- GitHubPages
+- shiny
+- binder
+- travis
+
+(*) les outils nécessaires au protocole d'analyse (FastQC, bowtie2, Samtools, HTseq-count, DESeq2) ne seront qu'utilisés sans donner beaucoup de détails, le protocole d'analyse n'étant pas l'objectif de cette formation.
+
+Thomas et Claire.
+
+
+
