@@ -7,3 +7,4 @@
 # Session Data files
 .RData
 packrat/lib*/
+.local/
