@@ -44,6 +44,13 @@ RUN Rscript -e "install.packages('devtools', repos='https://cran.rstudio.com/', 
 # Install Sarstools
 RUN Rscript -e 'library(devtools) ; install_github("PF2-pasteur-fr/SARTools", build_vignettes=TRUE)'
 
+# Install fastq dump
+
+RUN wget --quiet "https://ftp-trace.ncbi.nlm.nih.gov/sra/sdk/2.9.2/sratoolkit.2.9.2-ubuntu64.tar.gz"
+RUN tar -xzf sratoolkit.2.9.2-ubuntu64.tar.gz
+RUN rm sratoolkit.2.9.2-ubuntu64.tar.gz
+ENV PATH /home/sratoolkit.2.9.2-ubuntu64/bin:$PATH
+
 ## USER
 USER rstudio
 ENV HOME /home/rstudio
