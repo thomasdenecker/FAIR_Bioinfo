@@ -11,10 +11,6 @@
 ## 3- Run workflow (snakemake)
 ##------------------------------------------------------------------------------
 
-# nom du fichier contenant le génome de référence
-genome=GCF_000214015.3_version_140606_genomic.fna
-# nom du fichier contenant les annotations
-annotations=GCF_000214015.3_version_140606_genomic_DUO2.gff
 
 echo "=============================================================="
 echo "Creation of tree structure"
@@ -30,7 +26,6 @@ mkdir Project/graphics
 mkdir Project/htseq
 mkdir Project/reference
 mkdir Project/samtools
-
 
 echo "=============================================================="
 echo "Download data from SRA"
@@ -50,3 +45,21 @@ do
 done
 
 cd ../..
+
+echo "=============================================================="
+echo "Download annotations"
+echo "=============================================================="
+
+wget https://raw.githubusercontent.com/thomasdenecker/FAIR_Bioinfo/master/Data/O.tauri_annotation.gff -P Project/annotations
+
+echo "=============================================================="
+echo "Download genome"
+echo "=============================================================="
+
+wget https://raw.githubusercontent.com/thomasdenecker/FAIR_Bioinfo/master/Data/O.tauri_genome.fna -P Project/genome
+
+echo "=============================================================="
+echo "Snakemake"
+echo "=============================================================="
+
+snakemake
