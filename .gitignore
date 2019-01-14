@@ -1,0 +1,9 @@
+# History files
+.Rhistory
+.Rapp.history
+.Rprofile
+.rstudio/
+
+# Session Data files
+.RData
+packrat/lib*/
