@@ -55,3 +55,5 @@ ENV PATH /home/sratoolkit.2.9.2-ubuntu64/bin:$PATH
 USER rstudio
 ENV HOME /home/rstudio
 WORKDIR ${HOME}
+
+CMD jupyter notebook --ip 0.0.0.0 --NotebookApp.token='' --NotebookApp.password=''

@@ -7,6 +7,15 @@
 # Session Data files
 .RData
 packrat/lib*/
+
+# Project results
+Project/
+
+# Workflow system files
+.wget-hsts
+.cache/
+.java/
+.snakemake/
 .local/
 .bash_history
-Project/
+.ipynb_checkpoints/
