@@ -14,7 +14,7 @@ Vous trouverez ici des communications réalisées lors des sessions FAIR_bioinfo
 **Objectifs**
 
 L'objectif est de proposer et d'utiliser un panel d'outils permettant la réalisation d'un projet complet de bio-info en partant de rien et aboutissant à la création d'un conteneur (technologie Docker). Le partage, la valorisation et l'analyse dynamique des données seront inclus dans le panel. 
-FAIR correspond à l'acronyme anglais "Findable, Accessible, Interoperable, & Reusable", initialement défini pour les données mais que nous détournons ici pour les protocoles d'analyse de données.
+FAIR correspond à l'acronyme anglais "Findable, Accessible, Interoperable, & Reusable", initialement défini pour les données mais que nous détournons ici pour leurs protocoles d'analyse.
 Le projet support est une étude "d'expression différentielle de gènes" à partir de données RNAseq d'E.coli.
 
 **Pré-requis**
