@@ -1,4 +1,4 @@
-SampleID	Iron	Light	Time	Condition	Name
+SampleID	Iron	Light	Time	Condition_Name
 SRR3105699	DEPLETED	LIGHT	9H	CondA
 SRR3105698	DEPLETED	LIGHT	9H	CondA
 SRR3105697	DEPLETED	LIGHT	9H	CondA
