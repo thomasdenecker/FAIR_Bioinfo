@@ -16,6 +16,11 @@ library(shinydashboard)
 library(DESeq2)
 library(DT)
 library(FactoMineR)
+library(plotly)
+library(reshape2)
+library(shinyWidgets)
+library(colourpicker)
+library(shinyjs)
 
 ################################################################################
 # UI
@@ -25,16 +30,19 @@ header <- dashboardHeader(title = "FAIR_app")
 sidebar <- dashboardSidebar(
   sidebarMenu(
     menuItem("Home", tabName = "home", icon = icon("home")),
+    menuItem("Import", tabName = "import", icon = icon("file-import")),
     menuItem("Description", tabName = "description", icon = icon("info")),
     menuItem("Data exploration", tabName = "dataExplo", icon = icon("search")),
     menuItem("Normalization", tabName = "normalization", icon = icon("poll")),
     menuItem("Differential analysis", tabName = "diffAna", icon = icon("sliders-h")),
+    menuItem("Parameters", tabName = "parameters", icon = icon("wrench")),
     menuItem("Session information", tabName = "session", icon = icon("cubes")),
     menuItem("Bibliography", tabName = "biblio", icon = icon("book"))
   )
 )
 
 body <- dashboardBody(
+  useShinyjs(),
   tags$head(tags$style(HTML('
                             
                             /* body */
@@ -55,6 +63,20 @@ body <- dashboardBody(
                                 .skin-red .main-header .logo:hover {
                                 background-color: #222d32;
                                 }
+                          button.myBtn {
+                            color: white;
+                            background: #ff3300;
+                            border: 2px solid #cc2900;
+                            border-radius: 12px;
+                            font-size: 24px;
+                            text-align: center;
+                            margin-top: 20px;
+                            margin-bottom: 40px;
+                            margin-left: auto;
+                            margin-right: auto;
+                            display: block;
+                            width: 200px;
+                          }
 
                             '))),
   
@@ -64,10 +86,83 @@ body <- dashboardBody(
     #---------------------------------------------------------------------------
     tabItem(tabName = "home",
             h2("Welcome in FAIR_bioinfo application"),
-            
             p("The aim is to find features that are differentially expressed between 2 conditions. The statistical 
               analysis process includes data normalization, graphical exploration of raw and normalized data, test for differential 
-              expression for each feature between the conditions, raw p-value adjustment and export of lists of features having a significant differential expression between the conditions.")
+              expression for each feature between the conditions, raw p-value adjustment and export of lists of features having a s
+              ignificant differential expression between the conditions.")
+    ),
+    
+    
+    tabItem(tabName = "import",
+            h2("Data import"),
+            h3("Conditions"),
+            fluidRow(
+              column(3,
+                     h3("Parameters"),
+                     fileInput("ConditionFile",label = NULL,
+                               buttonLabel = "Browse...",
+                               placeholder = "No file selected"),align = "center",
+                     tags$hr(),
+                     
+                     # Input: Checkbox if file has header
+                     radioButtons("header_condition", "Header",
+                                  choices = c("Yes" = TRUE,
+                                              "No" = FALSE),
+                                  selected = TRUE, inline=T),
+                     
+                     # Input: Select separator ----
+                     radioButtons("sep_condition", "Separator",
+                                  choices = c(Comma = ",",
+                                              Semicolon = ";",
+                                              Tab = "\t"),
+                                  selected = "\t", inline=T),
+                     
+                     # Input: Select quotes ----
+                     radioButtons("quote_condition", "Quote",
+                                  choices = c(None = "",
+                                              "Double Quote" = '"',
+                                              "Single Quote" = "'"),
+                                  selected = "", inline=T)
+              ), 
+              column(9, 
+                     h3("File preview"),
+                     dataTableOutput(outputId = "contents_condition"))
+            ),
+            
+            h3("Count table"),
+            fluidRow(
+              column(3,
+                     h3("Parameters"),
+                     fileInput("countTableFile",label = NULL,
+                               buttonLabel = "Browse...",
+                               placeholder = "No file selected"),align = "center",
+                     tags$hr(),
+                     
+                     # Input: Checkbox if file has header
+                     radioButtons("header_CT", "Header",
+                                  choices = c("Yes" = TRUE,
+                                              "No" = FALSE),
+                                  selected = TRUE, inline=T),
+                     
+                     # Input: Select separator ----
+                     radioButtons("sep_CT", "Separator",
+                                  choices = c(Comma = ",",
+                                              Semicolon = ";",
+                                              Tab = "\t"),
+                                  selected = "\t", inline=T),
+                     
+                     # Input: Select quotes ----
+                     radioButtons("quote_CT", "Quote",
+                                  choices = c(None = "",
+                                              "Double Quote" = '"',
+                                              "Single Quote" = "'"),
+                                  selected = "", inline=T)
+              ), 
+              column(9, 
+                     h3("File preview"),
+                     dataTableOutput(outputId = "contents_countTable"))
+            ),
+            div(actionButton("run", "Run", class="myBtn"), align = "center")
             
     ),
     
@@ -79,11 +174,11 @@ body <- dashboardBody(
             p("The objective of this application is to find the differentially expressed genes after using the FAIR_Bioinfo workflow"),
             h3("Conditions"),
             p("The count data files and associated biological conditions are listed in the following table : "),
-            div(tableOutput('table'), align = "center"),
+            div(withSpinner(tableOutput('table')), align = "center"),
             h3("Count table"),
             textOutput("rawDataText"),
             tags$br(),
-            DTOutput("countTableDT"),
+            withSpinner(DTOutput("countTableDT")),
             p("Looking at the summary of the count table provides a basic description of these raw counts (min and max values, median, etc)."),
             div(tableOutput('summaryRawData'), align = "center"),
             
@@ -95,18 +190,18 @@ body <- dashboardBody(
               tags$li("different rRNA contamination levels between samples (even between biological replicates);"),
               tags$li("slight differences between library concentrations, since they may be difficult to measure with high precision.;")
             ),
-            div(plotOutput("figure1", width ="50%"), align = "center"),
+            div(withSpinner(plotOutput("figure1", width ="50%")), align = "center"),
             
             h3("Proportion of null counts sample"),
             textOutput("figure2Text"),
-            div(plotOutput("figure2", width ="50%"), align = "center"),
+            div(withSpinner(plotOutput("figure2", width ="50%")), align = "center"),
             
             h3("Density of count distribution"), 
             p("Next figure shows the distribution of read counts for each sample. For sake of readability, 
               log2(counts+1) are used instead of raw counts. Again we expect replicates to have similar 
               distributions. In addition, this figure shows if read counts are preferably low, medium or high. 
               This depends on the organisms as well as the biological conditions under consideration."),
-            div(plotOutput("figure3", width ="50%"), align = "center"),
+            div(withSpinner(plotOutput("figure3", width ="50%")), align = "center"),
             
             h3("Propotion of reads form most expressed sequence"),
             p("It may happen that one or a few features capture a high proportion of reads (up to 20% or more). 
@@ -114,8 +209,8 @@ body <- dashboardBody(
               to be robust to this situation [Dillies, 2012]. Anyway, we expect these high count features to be 
               the same across replicates. They are not necessarily the same across conditions. Next Figure and next 
               table  illustrate the possible presence of such high count features in the data set."),
-            div(plotOutput("figure4", width ="50%"), align = "center"),
-            div(tableOutput('table4'), align = "center"),
+            div(withSpinner(plotOutput("figure4", width ="50%")), align = "center"),
+            div(withSpinner(tableOutput('table4')), align = "center"),
             
             h3("Pairwise scatter plot"),
             p("We may wish to assess the similarity between samples across conditions. 
@@ -134,7 +229,7 @@ body <- dashboardBody(
                       conditions. Hence, the SERE statistic can be used to detect inversions between samples.")
             ),
             
-            div(plotOutput("figure5", width ="500px", height = "500px"), align = "center")
+            div(withSpinner(plotOutput("figure5", width ="500px", height = "500px")), align = "center")
             
     ), 
     
@@ -146,15 +241,15 @@ body <- dashboardBody(
             p("The main variability within the experiment is expected to come from biological 
               differences between the samples. This can be checked in two ways. The first one is to 
               perform a hierarchical clustering of the whole sample set.[...]"),
-            div(plotOutput("figure6", width ="50%"), align = "center"),
+            div(withSpinner(plotOutput("figure6", width ="50%")), align = "center"),
             
             p("Another way of visualizing the experiment variability is to look at the first principal 
               components of the PCA, as shown on the figure 7. On this figure, the first principal component (PC1) 
               is expected to separate samples from the different biological conditions, meaning that the biological 
               variability is the main source of variance in the data."),
             fluidRow(
-              column(6,plotOutput("figure7_1"), align = "center"),
-              column(6,plotOutput("figure7_2"), align = "center")
+              column(6,withSpinner(plotOutput("figure7_1")), align = "center"),
+              column(6,withSpinner(plotOutput("figure7_2")), align = "center")
             )
     ),
     
@@ -170,26 +265,26 @@ body <- dashboardBody(
               associated with the sample they belong to. Scaling factors around 1 mean (almost) no normalization is 
               performed. Scaling factors lower than 1 will produce normalized counts higher than raw ones, and the other way around. 
               "),
-            div(tableOutput('table5'), align = "center"),
+            div(withSpinner(tableOutput('table5')), align = "center"),
             
             p("The histograms (figure 8) can help to validate the choice of the normalization parameter (“median” or “shorth”).
               Under the hypothesis that most features are not differentially expressed, each size factor represented by a red line 
               is expected to be close to the mode of the distribution of the counts divided by their geometric means across samples."),
-            div(plotOutput("figure8",  height = "800px"), align = "center"),
+            div(withSpinner(plotOutput("figure8",  height = "800px")), align = "center"),
             
             p("The figure 9 shows that the scaling factors of DESeq2 and the total count normalization factors may not perform similarly."),
-            div(plotOutput("figure9", width ="50%"), align = "center"),
+            div(withSpinner(plotOutput("figure9", width ="50%")), align = "center"),
             
             p("Boxplots are often used as a qualitative measure of the quality of the normalization process, as they show how distributions are 
               globally affected during this process. We expect normalization to stabilize distributions across samples. Figure 10 shows boxplots 
               of raw (left) and normalized (right) data respectively."),
             fluidRow(
-              column(6,plotOutput("figure10_1"), align = "center"),
-              column(6,plotOutput("figure10_2"), align = "center")
+              column(6,withSpinner(plotlyOutput("figure10_1")), align = "center"),
+              column(6,withSpinner(plotlyOutput("figure10_2")), align = "center")
             ),
             fluidRow(
-              column(6,plotOutput("figure10_3"), align = "center"),
-              column(6,plotOutput("figure10_4"), align = "center")
+              column(6,withSpinner(plotlyOutput("figure10_3")), align = "center"),
+              column(6,withSpinner(plotlyOutput("figure10_4")), align = "center")
             )
     ),
     
@@ -218,8 +313,8 @@ body <- dashboardBody(
               fitType=“parametric”. Then, DESeq2 imposes a Cox Reid-adjusted profile likelihood maximization [Cox, 1987 and McCarthy, 2012] and uses 
               the maximum a posteriori (MAP) of the dispersion [Wu, 2013]."),
             fluidRow(
-              column(6,plotOutput("figure11_1"), align = "center"),
-              column(6,plotOutput("figure11_2"), align = "center")
+              column(6,withSpinner(plotOutput("figure11_1")), align = "center"),
+              column(6,withSpinner(plotOutput("figure11_2")), align = "center")
             ),
             p("The left panel on figure 11 shows the result of the dispersion estimation step. The x- and y-axes represent the mean count value and
               the estimated dispersion respectively. Black dots represent empirical dispersion estimates for each feature (from the observed counts). 
@@ -235,7 +330,7 @@ body <- dashboardBody(
               Figure 12 shows the distributions of raw p-values computed by the statistical test for the comparison(s) done. This 
               distribution is expected to be a mixture of a uniform distribution on [0,1] and a peak around 0 corresponding to the 
               differentially expressed features."),
-            div(plotOutput("figure12", width ="50%"), align = "center"),
+            div(withSpinner(plotOutput("figure12", width ="50%")), align = "center"),
             
             h3("Independent filtering"),
             p("DESeq2 can perform an independent filtering to increase the detection power of differentially expressed features at the 
@@ -255,13 +350,44 @@ body <- dashboardBody(
             p("Figure 13 represents the MA-plot of the data for the comparisons done, where differentially expressed features are highlighted in red.
               A MA-plot represents the log ratio of differential expression as a function of the mean intensity for each feature. Triangles correspond 
               to features having a too low/high log2(FC) to be displayed on the plot."),
-            div(plotOutput("figure13", width ="50%"), align = "center"),
+            div(withSpinner(plotOutput("figure13", width ="50%")), align = "center"),
             
             p("Figure 14 shows the volcano plots for the comparisons performed and differentially expressed features are still highlighted in red. 
               A volcano plot represents the log of the adjusted P value as a function of the log ratio of differential expression."),
-            div(plotlyOutput("figure14", width ="50%"), align = "center")
+            div(withSpinner(plotlyOutput("figure14", width ="50%")), align = "center")
             
     ),
+    
+    #---------------------------------------------------------------------------
+    # Parameters
+    #---------------------------------------------------------------------------
+    tabItem(tabName = "parameters",
+            h2("Parameters"),
+            p("You can change settings. The display will be refreshed automatically."),
+            h3("Graphics"),
+            colourpicker::colourInput("colHisto", "Histograms", "deepskyblue"), 
+            colourpicker::colourInput("colCondA", "Condition A", "gold"), 
+            colourpicker::colourInput("colCondB", "Condition B", "royalblue"),
+            h3("Differential analysis"),
+            
+            fluidRow(
+              column(4,h4("fitType"),selectInput("fitType",label = NULL, choices = c(parametric= "parametric", local="local", mean = "mean"), selected = "parametric")),
+              column(8, h4("Documentation"), 
+                     p('either "parametric", "local", or "mean" for the type of fitting of dispersions to the mean intensity.'),
+                     tags$ul(
+                       tags$li("parametric - fit a dispersion-mean relation of the form: dispersion = asymptDisp + extraPois / mean  
+                               via a robust gamma-family GLM. The coefficients asymptDisp and extraPois are given in the attribute 
+                               coefficients of the dispersionFunction of the object."), 
+                       tags$li("local - use the locfit package to fit a local regression of log dispersions over log base mean 
+                               (normal scale means and dispersions are input and output for dispersionFunction). The points are weighted by 
+                               normalized mean count in the local regression."),
+                       tags$li("mean - use the mean of gene-wise dispersion estimates.")
+                     )
+                     
+              )
+            )
+            
+    ), 
     
     #---------------------------------------------------------------------------
     # Session section
@@ -301,39 +427,148 @@ ui <- dashboardPage(skin= "red", header, sidebar, body)
 
 
 server <- function(input, output, session) {
+  
+  si <- sessionInfo()
+  
   #-----------------------------------------------------------------------------
   # Reactive Values
   #-----------------------------------------------------------------------------
   
-  rv <- reactiveValues()
+  deseqRV <- reactiveValues()
+  color <- reactiveValues()
+  data <- reactiveValues()
   
   #-----------------------------------------------------------------------------
-  # Read data
+  # Parameters - Colors
   #-----------------------------------------------------------------------------
-  si <- sessionInfo()
   
-  conditions <- read.csv2("/home/rstudio/conditions.txt", sep ="\t", header = T)
-  countTable <-  read.csv2("/home/rstudio/Project/countTable.txt", sep ="\t", header = T)
-  summary <- do.call(cbind, lapply(countTable, summary))
+  observeEvent(data$conds,{
+    color$colConds = rep(input$colCondA, length(data$conds))
+    color$colConds[which(data$conds  == "CondB")] = input$colCondB
+  })
   
-  #-----------------------------------------------------------------------------
-  # DEseq2
-  #-----------------------------------------------------------------------------
-  conds    = factor(unlist(lapply(strsplit(as.character(colnames(countTable)), "_"), function(l) l[[1]])))
-  colConds = rep("gold", length(conds))
-  colConds[which(conds == "CondB")] = "royalblue"
   
-  colData  = data.frame(condition = conds)
+  observeEvent(input$colHisto,{
+    color$hist = input$colHisto
+  })
   
-  ddsObjet = DESeqDataSetFromMatrix(countData = countTable, 
-                                    colData   = colData, formula(~ condition))
-  ddsObjet = estimateSizeFactors(ddsObjet)
-  SF = sizeFactors(ddsObjet)
-  SF = matrix(sizeFactors(ddsObjet), 1, length(SF),byrow = T, dimnames =list("Size factor", names(SF)))
-  normCountData = counts(ddsObjet, normalized = TRUE)
+  observeEvent(input$colCondA,{
+    color$colCondA = input$colCondA
+    color$colConds = rep(input$colCondA, length(data$conds))
+    color$colConds[which(data$conds  == "CondB")] = input$colCondB
+  })
   
-  ddsEstim = DESeq(ddsObjet)
-  resDESeq = results(ddsEstim, contrast = c("condition", "CondA", "CondB"))
+  observeEvent(input$colCondB,{
+    color$colCondB = input$colCondB
+    color$colConds = rep(input$colCondA, length(data$conds)) 
+    color$colConds[which(data$conds  == "CondB")] = input$colCondB
+  })
+  
+  
+  #---------------------------------------------------------------------------
+  # config read
+  #---------------------------------------------------------------------------
+  
+  output$contents_condition <-  renderDataTable({
+    
+    req(input$ConditionFile)
+    
+    df <- read.csv(input$ConditionFile$datapath,
+                   header = as.logical(input$header_condition),
+                   sep = input$sep_condition,
+                   quote = input$quote_condition,
+                   nrows=10
+    )
+  },  options = list(scrollX = TRUE , dom = 't'))
+  
+  
+  output$contents_countTable <-  renderDataTable({ 
+    
+    req(input$countTableFile)
+    
+    df <- read.csv(input$countTableFile$datapath,
+                   header = as.logical(input$header_CT),
+                   sep = input$sep_CT,
+                   quote = input$quote_CT,
+                   nrows=10
+    )
+  },  options = list(scrollX = TRUE , dom = 't'))
+  
+  #---------------------------------------------------------------------------
+  # Run 
+  #---------------------------------------------------------------------------
+  
+  observe({
+    if(is.null(input$ConditionFile) || is.null(input$countTableFile) ){
+      shinyjs::disable("run")
+    } else{
+      shinyjs::enable("run")
+    }
+  })
+  
+  
+  observeEvent(input$run, {
+    withProgress(message = 'Making plot', value = 0, {
+      n <- 6
+      #-------------------------------------------------------------------------
+      # Read data
+      #-------------------------------------------------------------------------
+      
+      incProgress(1/n, detail = "Read conditions")
+      data$conditions <- read.csv2(input$ConditionFile$datapath,
+                                   header = as.logical(input$header_condition),
+                                   sep = input$sep_condition,
+                                   quote = input$quote_condition
+      )
+      
+      incProgress(1/n, detail = "Read count table")
+      data$countTable <- read.csv2(input$countTableFile$datapath,
+                                   header = as.logical(input$header_CT),
+                                   sep = input$sep_CT,
+                                   quote = input$quote_CT
+      )
+      
+      incProgress(1/n, detail = "Summaryze")
+      data$summary <- do.call(cbind, lapply(data$countTable, summary))
+      
+      #-------------------------------------------------------------------------
+      # DEseq2
+      #-------------------------------------------------------------------------
+      incProgress(1/n, detail = "DEseq preparation")
+      data$conds    = factor(unlist(lapply(strsplit(as.character(colnames(data$countTable)), "_"), function(l) l[[1]])))
+      data$colData  = data.frame(condition = data$conds)
+      deseqRV$ddsObjet = DESeqDataSetFromMatrix(countData = data$countTable, 
+                                                colData   = data$colData, formula(~ condition))
+      deseqRV$ddsObjet = estimateSizeFactors(deseqRV$ddsObjet)
+      
+      incProgress(1/n, detail = "Normalisation")
+      deseqRV$SF = sizeFactors(deseqRV$ddsObjet)
+      deseqRV$SF = matrix(sizeFactors(deseqRV$ddsObjet), 1, length(deseqRV$SF),byrow = T, dimnames =list("Size factor", names(deseqRV$SF)))
+      deseqRV$normCountData = counts(deseqRV$ddsObjet, normalized = TRUE)
+      
+      incProgress(1/n, detail = "DEseq calculation")
+      deseqRV$ddsEstim = DESeq(deseqRV$ddsObjet, fitType = input$fitType)
+      deseqRV$resDESeq = results(deseqRV$ddsEstim, contrast = c("condition", "CondA", "CondB"))
+    })
+    
+    sendSweetAlert(
+      session = session,
+      title = "Done !",
+      text = "The analysis was successful !",
+      type = "success"
+    )
+    
+  })
+  
+  
+  observeEvent(input$fitType,{
+    if(!is.null(deseqRV$ddsObjet)){
+      deseqRV$ddsEstim = DESeq(deseqRV$ddsObjet, fitType = input$fitType)
+      deseqRV$resDESeq = results(deseqRV$ddsEstim, contrast = c("condition", "CondA", "CondB"))
+    }
+  })
+  
+  
   
   #-----------------------------------------------------------------------------
   # Session section
@@ -353,65 +588,65 @@ server <- function(input, output, session) {
   #---------------------------------------------------------------------------
   
   output$table <- renderTable({
-    conditions
+    data$conditions
   })
   
   
   output$rawDataText = renderText({
     paste("After loading the data we first have a look at the raw data table itself. The data table contains 
-      one row per annotated feature and one column per sequenced sample. Row names of this table are feature IDs (unique identifiers). 
-      The table contains raw count values representing the number of reads that map onto the features. For this project, there are", nrow(countTable) ,"features in the count data table.")
+            one row per annotated feature and one column per sequenced sample. Row names of this table are feature IDs (unique identifiers). 
+            The table contains raw count values representing the number of reads that map onto the features. For this project, there are", nrow(data$countTable) ,"features in the count data table.")
   })
   
-  output$countTableDT <- renderDT(countTable, server = TRUE)
+  output$countTableDT <- renderDT(data$countTable, server = TRUE)
   
-  output$summaryRawData <- renderTable(summary, rownames = T) 
+  output$summaryRawData <- renderTable(data$summary, rownames = T) 
   
   output$figure1 <- renderPlot({
-    barplot(colSums(countTable), ylab = "Total read count per sample",
-            main = "Total read count", col = c(rep("gold", 3), rep("royalblue", 3)),
-            names = colnames(countTable))
+    barplot(colSums(data$countTable), ylab = "Total read count per sample",
+            main = "Total read count", col = color$colConds,
+            names = colnames(data$countTable))
   })
   
   output$figure2Text = renderText({
     paste("Next figure shows the proportion of features with no read count in each sample. We expect this 
-          proportion to be similar within conditions. Features with null read counts in the 4 samples are 
-          left in the data but are not taken into account for the analysis with DESeq2. 
-          Here, ",sum(apply(countTable, 1, function(x) all(x==0)))," features (",sum(apply(countTable, 1, function(x) all(x==0)))*100/nrow(countTable) ,"%) are in this situation (dashed line). 
-          Results for those features (fold-change and p-values) are set to NA in the results files.")
+            proportion to be similar within conditions. Features with null read counts in the 4 samples are 
+            left in the data but are not taken into account for the analysis with DESeq2. 
+            Here, ",sum(apply(data$countTable, 1, function(x) all(x==0)))," features (",sum(apply(data$countTable, 1, function(x) all(x==0)))*100/nrow(data$countTable) ,"%) are in this situation (dashed line). 
+            Results for those features (fold-change and p-values) are set to NA in the results files.")
   })
   
   output$figure2 <- renderPlot({
-    barplot(apply(countTable, 2, function(c){sum(c==0)*100/length(c)}), ylab = "Proportion of null counts",
-            main = "Proportion of null counts per sample", col = c(rep("gold", 3), rep("royalblue", 3)),
-            names = colnames(countTable))
-    abline(h=sum(apply(countTable, 1, function(x) all(x==0)))*100/nrow(countTable), lty= 2)
+    barplot(apply(data$countTable, 2, function(c){sum(c==0)*100/length(c)}), ylab = "Proportion of null counts",
+            main = "Proportion of null counts per sample", col = color$colConds,
+            names = colnames(data$countTable))
+    abline(h=sum(apply(data$countTable, 1, function(x) all(x==0)))*100/nrow(data$countTable), lty= 2)
   })
   
   output$figure3 <- renderPlot({
-    plot(1, type="n", xlab="log2(raw count +1)", ylab="Density", ylim=c(0, 1), xlim=c( log(min(countTable)+1), log(max(countTable)+1)))
-    for( i in 1:ncol(countTable)){
-      if(length(grep("CondA", colnames(countTable)[i])) == 1){
-        lines(density(log(countTable[,i]+1)), col= "gold")
+    plot(1, type="n", xlab="log2(raw count +1)", ylab="Density", ylim=c(0, 1), xlim=c( log(min(data$countTable)+1), log(max(data$countTable)+1)))
+    for( i in 1:ncol(data$countTable)){
+      if(length(grep("CondA", colnames(data$countTable)[i])) == 1){
+        lines(density(log(data$countTable[,i]+1)), col= color$colCondA)
       } else {
-        lines(density(log(countTable[,i]+1)), col = "royalblue")
+        lines(density(log(data$countTable[,i]+1)), col = color$colCondB)
       }
     }
-    legend("topright", legend = c("CondA", "CondB"), col = c("gold", "royalblue"), lty = 1, inset = 0.01, box.lty = 0)
+    legend("topright", legend = c("CondA", "CondB"), col = c(color$colCondA, color$colCondB), lty = 1, inset = 0.01, box.lty = 0)
     
   })
   output$figure4 <- renderPlot({
-    barplot(apply(countTable, 2, function(c){max(c)*100/sum(c)}), ylab = "Proportion of reads",
-            main = "Proportion of reads from most expressed sequence", col = c(rep("gold", 3), rep("royalblue", 3)),
-            names = colnames(countTable))
+    barplot(apply(data$countTable, 2, function(c){max(c)*100/sum(c)}), ylab = "Proportion of reads",
+            main = "Proportion of reads from most expressed sequence", col = color$colConds,
+            names = colnames(data$countTable))
     
   })
   
   
-  output$table4 <- renderTable(apply(countTable, 2, function(x){x*100/sum(x)})[apply(countTable, 2, function(c){names(c)[which.max(c)]}), ], rownames = T) 
+  output$table4 <- renderTable(apply(data$countTable, 2, function(x){x*100/sum(x)})[apply(data$countTable, 2, function(c){names(c)[which.max(c)]}), ], rownames = T) 
   
   output$figure5 <- renderPlot({
-    # plot(log(countTable+1), pch= 20)
+    # plot(log(data$countTable+1), pch= 20)
     NULL
   })
   
@@ -419,57 +654,88 @@ server <- function(input, output, session) {
   # data exploration
   #---------------------------------------------------------------------------
   output$figure6 <- renderPlot({
-    plot(hclust(dist(t(countTable))), hang = -1)
+    plot(hclust(dist(t(data$countTable))), hang = -1)
   })
   
   output$figure7_1 <- renderPlot({
-    PCA(countTable, graph = T,axes = c(1, 2))
+    PCA(data$countTable, graph = T,axes = c(1, 2))
   })
   
   output$figure7_2 <- renderPlot({
-    PCA(countTable, graph = T,axes = c(1, 3))
+    PCA(data$countTable, graph = T,axes = c(1, 3))
   })
   
   
   #-----------------------------------------------------------------------------
   # Normalization
   #-----------------------------------------------------------------------------
-  output$table5 <- renderTable(SF, rownames = T) 
+  output$table5 <- renderTable(deseqRV$SF, rownames = T) 
   
   output$figure8 <- renderPlot({
     par(mfrow = c(2,3))
-    for(i in 1:ncol(normCountData)){
-      hist(log2(normCountData[,i]/mean(normCountData[,i],na.rm = T)), main = paste("Size factors diagnostic -", colnames(normCountData)[i]),
-           xlab = "log2(counts/geometic mean)", col = "cyan")
-      abline(v=SF[1,i], col = "red")
+    for(i in 1:ncol(deseqRV$normCountData)){
+      hist(log2(deseqRV$normCountData[,i]/mean(deseqRV$normCountData[,i],na.rm = T)), main = paste("Size factors diagnostic -", colnames(deseqRV$normCountData)[i]),
+           xlab = "log2(counts/geometic mean)", col = color$hist)
+      abline(v=deseqRV$SF[1,i], col = "red")
     }
   })
   
   output$figure9 <- renderPlot({
-    plot(SF[1,], apply(normCountData, 2, sum), xlab = "Size factors", ylab="Total number reads")
+    plot(deseqRV$SF[1,], apply(deseqRV$normCountData, 2, sum), xlab = "Size factors", ylab="Total number reads")
     abline(0,1)
   })
   
-  output$figure10_1 <- renderPlot({
-    boxplot(log(countTable+1), ylab = "log2(raw count +1)", col = colConds,
-            main = "Raw counts distribution")
+  output$figure10_1 <- renderPlotly({
+    inter = melt(as.matrix(log(data$countTable+1)))
+    plot_ly(inter,  y = ~value, x = ~Var2 , color = unlist(lapply(strsplit(as.character( inter$Var2 ), "_"), function(l) l[[1]]))  , colors = unique(color$colConds),
+            text = ~paste("Feature: ", Var1),
+            type = "box") %>%
+      layout(title = 'Raw counts distribution',
+             yaxis = list(zeroline = FALSE, title= "log2(raw count +1)"),
+             xaxis = list(zeroline = FALSE, title= ""))
   })
   
-  output$figure10_2 <- renderPlot({
-    boxplot(log(normCountData+1), ylab = "log2(norm count +1)", col = colConds,
-            main = "Normalized counts distribution")
+  output$figure10_2 <- renderPlotly({
+    inter = melt(as.matrix(log(deseqRV$normCountData+1)))
+    plot_ly(inter,  y = ~value, x = ~Var2 , color = unlist(lapply(strsplit(as.character( inter$Var2 ), "_"), function(l) l[[1]]))  , colors = unique(color$colConds),
+            text = ~paste("Feature: ", Var1),
+            type = "box") %>%
+      layout(title = 'Normalized counts distribution',
+             yaxis = list(zeroline = FALSE, title= "log2(norm count +1)"),
+             xaxis = list(zeroline = FALSE, title= ""))
+    
   })
   
-  output$figure10_3 <- renderPlot({
-    barplot(colSums(countTable), ylab = "Total read count raw per sample",
-            main = "Total read count", col = colConds,
-            names = colnames(countTable))
+  output$figure10_3 <- renderPlotly({
+    inter = colSums(data$countTable)
+    plot_ly(
+      x = names(inter),
+      y = inter,
+      color = unlist(lapply(strsplit(as.character( names(inter) ), "_"), function(l) l[[1]]))  , 
+      colors = unique(color$colConds),
+      name = unlist(lapply(strsplit(as.character( names(inter) ), "_"), function(l) l[[1]])) ,
+      type = "bar"
+    ) %>%
+      layout(title = 'Total read count - Raw',
+             yaxis = list(zeroline = FALSE, title= "Total read count raw per sample"),
+             xaxis = list(zeroline = FALSE, title= ""))
+    
   })
   
-  output$figure10_4 <- renderPlot({
-    barplot(colSums(normCountData), ylab = "Total read normalized count per sample",
-            main = "Total read count", col = colConds,
-            names = colnames(normCountData))
+  output$figure10_4 <- renderPlotly({
+    
+    inter = colSums(deseqRV$normCountData)
+    plot_ly(
+      x = names(inter),
+      y = inter,
+      color = unlist(lapply(strsplit(as.character( names(inter) ), "_"), function(l) l[[1]]))  , 
+      colors = unique(color$colConds),
+      name = unlist(lapply(strsplit(as.character( names(inter) ), "_"), function(l) l[[1]])) ,
+      type = "bar"
+    ) %>%
+      layout(title = 'Total read count - Normalized',
+             yaxis = list(zeroline = FALSE, title= "Total read normalized count per sample"),
+             xaxis = list(zeroline = FALSE, title= ""))
   })
   
   #-----------------------------------------------------------------------------
@@ -477,13 +743,13 @@ server <- function(input, output, session) {
   #-----------------------------------------------------------------------------
   
   output$figure11_1 <- renderPlot({
-    plotDispEsts(ddsEstim)
+    plotDispEsts(deseqRV$ddsEstim)
   })
   
   output$figure11_2 <- renderPlot({
-    inter = log(dispersions(ddsEstim))
+    inter = log(dispersions(deseqRV$ddsEstim))
     hist(inter, 
-         col="cyan", 
+         col=color$hist, 
          border="black",
          prob = TRUE, 
          xlab = "Feature dispersion estimate",
@@ -495,18 +761,18 @@ server <- function(input, output, session) {
   })
   
   output$figure12 <- renderPlot({
-    hist(resDESeq$pvalue, breaks= 100, col = "cyan")
+    hist(deseqRV$resDESeq$pvalue, breaks= 100, col = color$hist)
   })
   
-  output$table6 <- renderTable(metadata(resDESeq)$filterNumRej[which(rownames(metadata(resDESeq)$filterNumRej) == names(metadata(resDESeq)$filterThreshold)),] , rownames = T) 
+  output$table6 <- renderTable(metadata(deseqRV$resDESeq)$filterNumRej[which(rownames(metadata(deseqRV$resDESeq)$filterNumRej) == names(metadata(deseqRV$resDESeq)$filterThreshold)),] , rownames = T) 
   
   output$figure13 <- renderPlot({
-    plotMA(resDESeq)
+    plotMA(deseqRV$resDESeq)
   })
   
   output$figure14 <- renderPlotly({
     
-    inter = cbind(x = resDESeq$log2FoldChange, y = -log10(resDESeq$padj), feature = rownames(resDESeq), SE = resDESeq$lfcSE)
+    inter = cbind(x = deseqRV$resDESeq$log2FoldChange, y = -log10(deseqRV$resDESeq$padj), feature = rownames(deseqRV$resDESeq), SE = deseqRV$resDESeq$lfcSE)
     inter = na.omit(inter)
     inter = as.data.frame(inter)
     inter[,1] = as.numeric(as.character(inter[,1]))
@@ -516,12 +782,12 @@ server <- function(input, output, session) {
     plot_ly(inter, x = ~x, y = ~y, type = 'scatter', mode = 'markers',
             text = ~paste("Feature: ", feature, '<br>lfcSE:', SE),
             color = "blue") %>%
-        layout(title = 'Volcano plot',
-               yaxis = list(zeroline = FALSE, title= "-log10(adjusted pvalue)"),
-               xaxis = list(zeroline = FALSE, title= "log2(fold change)"))
+      layout(title = 'Volcano plot',
+             yaxis = list(zeroline = FALSE, title= "-log10(adjusted pvalue)"),
+             xaxis = list(zeroline = FALSE, title= "log2(fold change)"))
     
   })
-
+  
   
 }
 

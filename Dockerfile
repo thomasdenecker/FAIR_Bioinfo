@@ -40,8 +40,11 @@ RUN Rscript -e 'if (!requireNamespace("BiocManager", quietly = TRUE)) install.pa
 # Install CRAN package
 RUN Rscript -e "install.packages('devtools', repos='https://cran.rstudio.com/', dependencies = TRUE)" \
     && rm -rf /tmp/downloaded_packages/ /tmp/*.rds
-RUN Rscript -e "install.packages(c('shinydashboard','DT', 'FactoMineR''corrplot','plotly'), repos='https://cran.rstudio.com/', dependencies = TRUE)" \
+RUN Rscript -e "install.packages(c('shinydashboard','DT', 'FactoMineR', 'corrplot','plotly'), repos='https://cran.rstudio.com/', dependencies = TRUE)" \
     && rm -rf /tmp/downloaded_packages/ /tmp/*.rds
+RUN Rscript -e "install.packages(c('shinyWidgets','colourpicker'), repos='https://cran.rstudio.com/', dependencies = TRUE)" \
+    && rm -rf /tmp/downloaded_packages/ /tmp/*.rds
+
 
 # Install Sarstools
 RUN Rscript -e 'library(devtools) ; install_github("PF2-pasteur-fr/SARTools", build_vignettes=TRUE)'
