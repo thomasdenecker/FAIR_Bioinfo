@@ -21,6 +21,7 @@ library(reshape2)
 library(shinyWidgets)
 library(colourpicker)
 library(shinyjs)
+library(shinycssloaders)
 
 ################################################################################
 # UI
@@ -28,17 +29,8 @@ library(shinyjs)
 
 header <- dashboardHeader(title = "FAIR_app")
 sidebar <- dashboardSidebar(
-  sidebarMenu(
-    menuItem("Home", tabName = "home", icon = icon("home")),
-    menuItem("Import", tabName = "import", icon = icon("file-import")),
-    menuItem("Description", tabName = "description", icon = icon("info")),
-    menuItem("Data exploration", tabName = "dataExplo", icon = icon("search")),
-    menuItem("Normalization", tabName = "normalization", icon = icon("poll")),
-    menuItem("Differential analysis", tabName = "diffAna", icon = icon("sliders-h")),
-    menuItem("Parameters", tabName = "parameters", icon = icon("wrench")),
-    menuItem("Session information", tabName = "session", icon = icon("cubes")),
-    menuItem("Bibliography", tabName = "biblio", icon = icon("book"))
-  )
+  uiOutput('sidebar')
+
 )
 
 body <- dashboardBody(
@@ -76,6 +68,11 @@ body <- dashboardBody(
                             margin-right: auto;
                             display: block;
                             width: 200px;
+                          }
+                          
+                          p.legend{
+                            text-align: center;
+                            font-style: italic;
                           }
 
                             '))),
@@ -175,12 +172,17 @@ body <- dashboardBody(
             h3("Conditions"),
             p("The count data files and associated biological conditions are listed in the following table : "),
             div(withSpinner(tableOutput('table')), align = "center"),
+            p(class="legend", "Table 1: Data files and associated biological conditions."),
+            
             h3("Count table"),
             textOutput("rawDataText"),
             tags$br(),
             withSpinner(DTOutput("countTableDT")),
+            p(class="legend", "Table 2: View of the count data table."),
+            
             p("Looking at the summary of the count table provides a basic description of these raw counts (min and max values, median, etc)."),
             div(tableOutput('summaryRawData'), align = "center"),
+            p(class="legend", "Table 3: Summary of the raw counts."),
             
             h3("Total read count per sample"),
             p("Next figure shows the total number of mapped reads for each sample. Reads that map on multiple locations on the transcriptome are 
@@ -191,10 +193,12 @@ body <- dashboardBody(
               tags$li("slight differences between library concentrations, since they may be difficult to measure with high precision.;")
             ),
             div(withSpinner(plotOutput("figure1", width ="50%")), align = "center"),
+            p(class="legend", "Figure 1: Number of mapped reads per sample. Colors refer to the biological condition of the sample."),
             
             h3("Proportion of null counts sample"),
             textOutput("figure2Text"),
             div(withSpinner(plotOutput("figure2", width ="50%")), align = "center"),
+            p(class="legend", "Figure 2: Proportion of features with null read counts in each sample."),
             
             h3("Density of count distribution"), 
             p("Next figure shows the distribution of read counts for each sample. For sake of readability, 
@@ -202,6 +206,7 @@ body <- dashboardBody(
               distributions. In addition, this figure shows if read counts are preferably low, medium or high. 
               This depends on the organisms as well as the biological conditions under consideration."),
             div(withSpinner(plotOutput("figure3", width ="50%")), align = "center"),
+            p(class="legend", "Figure 3: Density distribution of read counts."),
             
             h3("Propotion of reads form most expressed sequence"),
             p("It may happen that one or a few features capture a high proportion of reads (up to 20% or more). 
@@ -210,7 +215,10 @@ body <- dashboardBody(
               the same across replicates. They are not necessarily the same across conditions. Next Figure and next 
               table  illustrate the possible presence of such high count features in the data set."),
             div(withSpinner(plotOutput("figure4", width ="50%")), align = "center"),
+            p(class="legend", "Figure 4: Percentage of reads associated with the sequence having the highest count 
+              (provided in each box on the graph) for each sample."),
             div(withSpinner(tableOutput('table4')), align = "center"),
+            p(class="legend", "Table 4: Percentage of reads associated with the sequences having the highest counts."),
             
             h3("Pairwise scatter plot"),
             p("We may wish to assess the similarity between samples across conditions. 
@@ -229,7 +237,8 @@ body <- dashboardBody(
                       conditions. Hence, the SERE statistic can be used to detect inversions between samples.")
             ),
             
-            div(withSpinner(plotOutput("figure5", width ="500px", height = "500px")), align = "center")
+            div(withSpinner(plotOutput("figure5", width ="500px", height = "500px")), align = "center"),
+            p(class="legend", "Figure 5: Pairwise comparison of samples.")
             
     ), 
     
@@ -242,6 +251,7 @@ body <- dashboardBody(
               differences between the samples. This can be checked in two ways. The first one is to 
               perform a hierarchical clustering of the whole sample set.[...]"),
             div(withSpinner(plotOutput("figure6", width ="50%")), align = "center"),
+            p(class="legend", "Figure 6: Sample clustering based on normalized data."),
             
             p("Another way of visualizing the experiment variability is to look at the first principal 
               components of the PCA, as shown on the figure 7. On this figure, the first principal component (PC1) 
@@ -250,7 +260,9 @@ body <- dashboardBody(
             fluidRow(
               column(6,withSpinner(plotOutput("figure7_1")), align = "center"),
               column(6,withSpinner(plotOutput("figure7_2")), align = "center")
-            )
+            ),
+            p(class="legend", "Figure 7: First two components of a Principal Component Analysis, with percentages of 
+              variance associated with each axis.")
     ),
     
     #---------------------------------------------------------------------------
@@ -266,14 +278,17 @@ body <- dashboardBody(
               performed. Scaling factors lower than 1 will produce normalized counts higher than raw ones, and the other way around. 
               "),
             div(withSpinner(tableOutput('table5')), align = "center"),
+            p(class="legend", "Table 5: Normalization factors."),
             
             p("The histograms (figure 8) can help to validate the choice of the normalization parameter (“median” or “shorth”).
               Under the hypothesis that most features are not differentially expressed, each size factor represented by a red line 
               is expected to be close to the mode of the distribution of the counts divided by their geometric means across samples."),
             div(withSpinner(plotOutput("figure8",  height = "800px")), align = "center"),
+            p(class="legend", "Figure 8: Diagnostic of the estimation of the size factors."),
             
             p("The figure 9 shows that the scaling factors of DESeq2 and the total count normalization factors may not perform similarly."),
             div(withSpinner(plotOutput("figure9", width ="50%")), align = "center"),
+            p(class="legend", "Figure 9: Plot of the estimated size factors and the total number of reads per sample."),
             
             p("Boxplots are often used as a qualitative measure of the quality of the normalization process, as they show how distributions are 
               globally affected during this process. We expect normalization to stabilize distributions across samples. Figure 10 shows boxplots 
@@ -285,7 +300,8 @@ body <- dashboardBody(
             fluidRow(
               column(6,withSpinner(plotlyOutput("figure10_3")), align = "center"),
               column(6,withSpinner(plotlyOutput("figure10_4")), align = "center")
-            )
+            ),
+            p(class="legend", "Figure 10: Boxplots adn barplots of raw (left) and normalized (right) read counts.")
     ),
     
     
@@ -316,6 +332,8 @@ body <- dashboardBody(
               column(6,withSpinner(plotOutput("figure11_1")), align = "center"),
               column(6,withSpinner(plotOutput("figure11_2")), align = "center")
             ),
+            p(class="legend", "Figure 11: Dispersion estimates (left) and diagnostic of log-normality (right)."),
+            
             p("The left panel on figure 11 shows the result of the dispersion estimation step. The x- and y-axes represent the mean count value and
               the estimated dispersion respectively. Black dots represent empirical dispersion estimates for each feature (from the observed counts). 
               The red dots show the mean-variance relationship function (fitted dispersion value) as estimated by the model. The blue dots are the final
@@ -331,6 +349,7 @@ body <- dashboardBody(
               distribution is expected to be a mixture of a uniform distribution on [0,1] and a peak around 0 corresponding to the 
               differentially expressed features."),
             div(withSpinner(plotOutput("figure12", width ="50%")), align = "center"),
+            p(class="legend", "Figure 12: Distribution(s) of raw p-values."),
             
             h3("Independent filtering"),
             p("DESeq2 can perform an independent filtering to increase the detection power of differentially expressed features at the 
@@ -341,20 +360,29 @@ body <- dashboardBody(
               Table 6 reports the thresholds used for each comparison and the number of features discarded by the independent filtering. 
               Adjusted p-values of discarded features are then set to NA."),
             div(tableOutput('table6'), align = "center"),
+            p(class="legend", "Table 6: Number of features discarded by the independent filtering for each comparison."),
             
             h3("Final results"),
             p("A p-value adjustment is performed to take into account multiple testing and control the false positive rate to a chosen level α.
               For this analysis, a BH p-value adjustment was performed [Benjamini, 1995 and 2001] and the level of controlled false positive rate 
               was set to 0.05."),
             
+            withSpinner(DTOutput("DEseqTable")),
+            p(class="legend", "Table 7: Complete table of Deseq2 results."),
+            
             p("Figure 13 represents the MA-plot of the data for the comparisons done, where differentially expressed features are highlighted in red.
               A MA-plot represents the log ratio of differential expression as a function of the mean intensity for each feature. Triangles correspond 
               to features having a too low/high log2(FC) to be displayed on the plot."),
             div(withSpinner(plotOutput("figure13", width ="50%")), align = "center"),
+            p(class="legend", "Figure 13: MA-plot(s) of each comparison. Red dots represent significantly differentially expressed features."),
             
             p("Figure 14 shows the volcano plots for the comparisons performed and differentially expressed features are still highlighted in red. 
               A volcano plot represents the log of the adjusted P value as a function of the log ratio of differential expression."),
-            div(withSpinner(plotlyOutput("figure14", width ="50%")), align = "center")
+            div(withSpinner(plotlyOutput("figure14", width ="50%")), align = "center"),
+            p(class="legend", "Figure 14: Volcano plot(s) of each comparison. Red dots represent significantly differentially expressed features."),
+            
+            withSpinner(DTOutput("DEseqTableSelected")),
+            p(class="legend", "Table 7: Selected genes.")
             
     ),
     
@@ -371,8 +399,8 @@ body <- dashboardBody(
             h3("Differential analysis"),
             
             fluidRow(
-              column(4,h4("fitType"),selectInput("fitType",label = NULL, choices = c(parametric= "parametric", local="local", mean = "mean"), selected = "parametric")),
-              column(8, h4("Documentation"), 
+              column(3,h4("fitType"),selectInput("fitType",label = NULL, choices = c(parametric= "parametric", local="local", mean = "mean"), selected = "parametric")),
+              column(9, h4("Documentation"), 
                      p('either "parametric", "local", or "mean" for the type of fitting of dispersions to the mean intensity.'),
                      tags$ul(
                        tags$li("parametric - fit a dispersion-mean relation of the form: dispersion = asymptDisp + extraPois / mean  
@@ -385,7 +413,50 @@ body <- dashboardBody(
                      )
                      
               )
+            ),
+            
+            fluidRow(
+              column(3,h4("P-value"),numericInput('pvalue', NA, 0.05,
+                                                  min = 0, max = 1, step = 0.001)),
+              column(9, h4("Documentation"), 
+                     p('The significance cutoff used for optimizing the independent filtering (by default 0.05). 
+                       If the adjusted p-value cutoff (FDR) will be a value other than 0.05, alpha should be set to that value.')
+              )
+            ),
+
+            fluidRow(
+              column(3,h4("logFC theshold"),numericInput('logFC', NA, 2,
+                                                         min = 0, max = 100, step = 0.01)),
+              column(9, h4("Documentation"), 
+                     p('logFC theshold')
+              )
+            ),
+            
+            fluidRow(
+              column(3,h4("logFC theshold"),selectInput("pAdjustMethod",label = NULL, choices = c(holm = "holm", hochberg = "hochberg", hommel = "hommel", bonferroni = "bonferroni", 
+                                                                                                  BH = "BH", BY = "BY", fdr = "fdr", none = "none"), 
+                                                        selected = "BH")),
+              column(9, h4("Documentation"), 
+                     p("The adjustment methods include the Bonferroni correction ('bonferroni') in which the p-values are multiplied by the number of 
+                                comparisons. Less conservative corrections are also included by Holm (1979) ('holm'), Hochberg (1988) ('hochberg'), Hommel (1988) ('hommel'), 
+                                Benjamini & Hochberg (1995) ('BH' or its alias 'fdr'), and Benjamini & Yekutieli (2001) ('BY'), respectively. A pass-through option ('none') 
+                                is also included. The set of methods are contained in the p.adjust.methods vector for the benefit of methods that need to have the method as an 
+                                option and pass it on to p.adjust.
+
+                                The first four methods are designed to give strong control of the family-wise error rate. There seems no reason to use the unmodified Bonferroni 
+                                correction because it is dominated by Holm's method, which is also valid under arbitrary assumptions.
+                                
+                                Hochberg's and Hommel's methods are valid when the hypothesis tests are independent or when they are non-negatively associated (Sarkar, 1998; 
+                                Sarkar and Chang, 1997). Hommel's method is more powerful than Hochberg's, but the difference is usually small and the Hochberg p-values are faster to compute.
+                                
+                                The 'BH' (aka 'fdr') and 'BY' method of Benjamini, Hochberg, and Yekutieli control the false discovery rate, the expected proportion of false discoveries 
+                                amongst the rejected hypotheses. The false discovery rate is a less stringent condition than the family-wise error rate, so these methods are more powerful than the others.
+                                
+                                Note that you can set n larger than length(p) which means the unobserved p-values are assumed to be greater than all the observed p for 'bonferroni' and 'holm'
+                                methods and equal to 1 for the other methods.")
+              )
             )
+            
             
     ), 
     
@@ -437,6 +508,43 @@ server <- function(input, output, session) {
   deseqRV <- reactiveValues()
   color <- reactiveValues()
   data <- reactiveValues()
+  
+  #-----------------------------------------------------------------------------
+  # Side bar
+  #-----------------------------------------------------------------------------
+  
+  data$run = F
+  
+  observeEvent(data$run, {
+    if(data$run){
+      output$sidebar <- renderUI({
+        sidebarMenu( id = "tabs",
+          menuItem("Home", tabName = "home", icon = icon("home")),
+          menuItem("Import", tabName = "import", icon = icon("file-import")),
+          menuItem("Description", tabName = "description", icon = icon("info"), selected = T),
+          menuItem("Data exploration", tabName = "dataExplo", icon = icon("search")),
+          menuItem("Normalization", tabName = "normalization", icon = icon("poll")),
+          menuItem("Differential analysis", tabName = "diffAna", icon = icon("sliders-h")),
+          menuItem("Parameters", tabName = "parameters", icon = icon("wrench")),
+          menuItem("Session information", tabName = "session", icon = icon("cubes")),
+          menuItem("Bibliography", tabName = "biblio", icon = icon("book"))
+        )
+      })
+      
+      updateTabItems(session, "tabs", selected = "description")
+      shinyjs::runjs("window.scrollTo(0, 0)")
+      
+    } else {
+      output$sidebar <- renderUI({
+        sidebarMenu(id = "tabs",
+          menuItem("Home", tabName = "home", icon = icon("home"), selected = T),
+          menuItem("Import", tabName = "import", icon = icon("file-import"))
+        )
+      })
+      updateTabItems(session, "tabs", selected = "home")
+      shinyjs::runjs("window.scrollTo(0, 0)")
+    }
+  })
   
   #-----------------------------------------------------------------------------
   # Parameters - Colors
@@ -548,7 +656,7 @@ server <- function(input, output, session) {
       
       incProgress(1/n, detail = "DEseq calculation")
       deseqRV$ddsEstim = DESeq(deseqRV$ddsObjet, fitType = input$fitType)
-      deseqRV$resDESeq = results(deseqRV$ddsEstim, contrast = c("condition", "CondA", "CondB"))
+      deseqRV$resDESeq = results(deseqRV$ddsEstim, contrast = c("condition", "CondA", "CondB"), pAdjustMethod = input$pAdjustMethod )
     })
     
     sendSweetAlert(
@@ -558,17 +666,26 @@ server <- function(input, output, session) {
       type = "success"
     )
     
+    data$run = T
   })
   
+  
+  #-----------------------------------------------------------------------------
+  # Parameters - Deseq2
+  #-----------------------------------------------------------------------------
   
   observeEvent(input$fitType,{
     if(!is.null(deseqRV$ddsObjet)){
       deseqRV$ddsEstim = DESeq(deseqRV$ddsObjet, fitType = input$fitType)
-      deseqRV$resDESeq = results(deseqRV$ddsEstim, contrast = c("condition", "CondA", "CondB"))
+      deseqRV$resDESeq = results(deseqRV$ddsEstim, contrast = c("condition", "CondA", "CondB"), pAdjustMethod = input$pAdjustMethod )
     }
   })
   
-  
+  observeEvent(input$pAdjustMethod,{
+    if(!is.null(deseqRV$ddsObjet)){
+      deseqRV$resDESeq = results(deseqRV$ddsEstim, contrast = c("condition", "CondA", "CondB"), pAdjustMethod = input$pAdjustMethod )
+    }
+  })
   
   #-----------------------------------------------------------------------------
   # Session section
@@ -766,6 +883,17 @@ server <- function(input, output, session) {
   
   output$table6 <- renderTable(metadata(deseqRV$resDESeq)$filterNumRej[which(rownames(metadata(deseqRV$resDESeq)$filterNumRej) == names(metadata(deseqRV$resDESeq)$filterThreshold)),] , rownames = T) 
   
+  
+  output$DEseqTable <- renderDT(as.data.frame(deseqRV$resDESeq), 
+                                server = FALSE,
+                                editable = F,
+                                extensions = 'Buttons',
+                                options = list(scrollX = TRUE, 
+                                               extensions = 'Buttons', 
+                                               searchHighlight = TRUE,
+                                               dom = 'Bfrtip',
+                                               buttons = c('csv', 'excel','print')))
+  
   output$figure13 <- renderPlot({
     plotMA(deseqRV$resDESeq)
   })
@@ -778,16 +906,34 @@ server <- function(input, output, session) {
     inter[,1] = as.numeric(as.character(inter[,1]))
     inter[,2] = as.numeric(as.character(inter[,2]))
     
+    color = rep("black", nrow(inter))
+    pos = which(abs(inter$x) >= input$logFC & inter$y >= -log10(input$pvalue))
+    color[pos] = "red"
+    
+    deseqRV$selected = deseqRV$resDESeq[which(abs(deseqRV$resDESeq$log2FoldChange) >= input$logFC & deseqRV$resDESeq$padj <= input$pvalue),]
     
     plot_ly(inter, x = ~x, y = ~y, type = 'scatter', mode = 'markers',
             text = ~paste("Feature: ", feature, '<br>lfcSE:', SE),
-            color = "blue") %>%
+            marker = list(color = color)) %>%
       layout(title = 'Volcano plot',
+             shapes=list(list(type='line', x0=min(inter$x)-1, x1= max(inter$x)+1, y0=-log10(input$pvalue), y1=-log10(input$pvalue), line=list(dash='dot', width=1)),
+                         list(type='line', x0=-input$logFC, x1= -input$logFC, y0=0, y1=max(inter$y), line=list(dash='dot', width=1)),
+                         list(type='line', x0=input$logFC, x1= input$logFC, y0=0, y1=max(inter$y), line=list(dash='dot', width=1))),
              yaxis = list(zeroline = FALSE, title= "-log10(adjusted pvalue)"),
              xaxis = list(zeroline = FALSE, title= "log2(fold change)"))
     
   })
   
+  
+  output$DEseqTableSelected <- renderDT(as.data.frame(deseqRV$selected), 
+                                server = FALSE,
+                                editable = F,
+                                extensions = 'Buttons',
+                                options = list(scrollX = TRUE, 
+                                               extensions = 'Buttons', 
+                                               searchHighlight = TRUE,
+                                               dom = 'Bfrtip',
+                                               buttons = c('csv', 'excel','print')))
   
 }
 
