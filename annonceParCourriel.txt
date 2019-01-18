@@ -29,6 +29,43 @@ Les outils (ou un équivalent fonctionnel) présentés et utilisés seront (*) :
 (*) les outils nécessaires au protocole d'analyse (FastQC, bowtie2, Samtools, HTseq-count, DESeq2) ne seront qu'utilisés sans donner beaucoup de détails, le protocole d'analyse n'étant pas l'objectif de cette formation.
 
 Thomas et Claire.
+____________________________________
+
+Bonjour,
+
+Toutes nos excuses à ceux qui ne sont pas intéressés par FAIR_bioinfo (Formation à des outils pour la diffusion de protocole d'analyse bioinformatique).
+
+Pour recevoir les informations concernant la formation FAIR_bioinfo, merci vous **INSCRIRE** sur la chaîne "fair_bioinfo" du "slack(*) CompBiol-I2BC".
+Toutes les informations seront ensuite uniquement transmises par ce canal de communication.
+
+Suite à plusieurs retours depuis l'envoi de la première annonce, voici qq informations complémentaires :
+
+- est-il possible venir avec un niveau ~0 en info/bioinfo pour s’imprégner d'une "culture bioinfo" ?
+Ce sera compliqué mais pas impossible. Tout sera détaillé. Cependant, avoir conscience qu'il n'y aura pas de prise d'indépendance mais seulement la capacité à mettre en pratique sur un jeu de données proche de l'exemple d'analyse choisi.
+
+- la première session de la formation (présentation des outils Git/GitHub) a déjà eu lieu lors du Club BGBS du 12 décembre 2018 et cela ne sera pas de repris lors de la session de janvier. Il est possible de rattraper avec les diapos disponibles ici : https://github.com/thomasdenecker/FAIR_Bioinfo (lien "Slides", en bas de page). Ne pas hésiter à prendre contact avec l'un de nous en cas de problème.
+
+- Pour chaque session, nous avons prévu une présentation "active" d'une heure, suivie d'1/2 heure pour des questions. Cette 1/2h peut aussi permettre de répondre à des besoins d'aide ponctuels concernant les sessions précédentes.
+
+- Quelles sont les ressources nécessaires en CPU et RAM pour faire tourner les programmes ?
+Nous avons conçu la formation pour que les ressources informatiques finales soient juste de disposer d'un accès internet (donc d'un navigateur).
+
+Thomas Denecker (pièce 101a, bât 400, Orsay), Claire Toffano-Nioche (pièce 120, bât 400, Orsay)
+__________________________
+(*) slack :
+Si vous ne connaissez pas slack, voici une vidéo de présentation :
+<https://youtu.be/9RJZMSsH7-g>
+
+Pour rejoindre le groupe créé par Daniel Gautheret et Gaëlle Lelandais,
+pour partager des ressources/informations en relations avec la bioinfo
+il vous suffit de vous connecter avec le lien suivant :
+<https://join.slack.com/t/compbiol-i2bc/signup>
+
+Il faut une adresse @u-psud.fr ou @i2bc.paris-saclay.fr .
+
+Et la chaine de diffusion "fair_bioinfo" sera accessible sur l'un des liens du panneau de gauche.
+
+N'hésitez pas à nous solliciter en cas de questions.
 
 
 
