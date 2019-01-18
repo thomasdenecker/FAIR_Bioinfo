@@ -1,1 +1,1 @@
-R -e "shiny::runApp('R-code/')"
+R -e "shiny::runApp('R-code', port=4444)"

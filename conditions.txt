@@ -1,7 +1,7 @@
-SampleID	Iron	Light	Time	Condition_Name
-SRR3105699	DEPLETED	LIGHT	9H	CondA
-SRR3105698	DEPLETED	LIGHT	9H	CondA
-SRR3105697	DEPLETED	LIGHT	9H	CondA
-SRR3099587	STANDARD	LIGHT	9H	CondB
-SRR3099586	STANDARD	LIGHT	9H	CondB
-SRR3099585	STANDARD	LIGHT	9H	CondB
+SampleID	Iron	Light	Time	Condition_Name	wget	ascp
+SRR3105699	DEPLETED	LIGHT	9H	CondA	ftp.sra.ebi.ac.uk/vol1/fastq/SRR310/009/SRR3105699/SRR3105699.fastq.gz	era-fasp@fasp.sra.ebi.ac.uk:/vol1/fastq/SRR310/009/SRR3105699/SRR3105699.fastq.gz
+SRR3105698	DEPLETED	LIGHT	9H	CondA	ftp.sra.ebi.ac.uk/vol1/fastq/SRR310/008/SRR3105698/SRR3105698.fastq.gz	era-fasp@fasp.sra.ebi.ac.uk:/vol1/fastq/SRR310/008/SRR3105698/SRR3105698.fastq.gz
+SRR3105697	DEPLETED	LIGHT	9H	CondA	ftp.sra.ebi.ac.uk/vol1/fastq/SRR310/007/SRR3105697/SRR3105697.fastq.gz	era-fasp@fasp.sra.ebi.ac.uk:/vol1/fastq/SRR310/007/SRR3105697/SRR3105697.fastq.gz
+SRR3099587	STANDARD	LIGHT	9H	CondB	ftp.sra.ebi.ac.uk/vol1/fastq/SRR309/007/SRR3099587/SRR3099587.fastq.gz	era-fasp@fasp.sra.ebi.ac.uk:/vol1/fastq/SRR309/007/SRR3099587/SRR3099587.fastq.gz
+SRR3099586	STANDARD	LIGHT	9H	CondB	ftp.sra.ebi.ac.uk/vol1/fastq/SRR309/006/SRR3099586/SRR3099586.fastq.gz	era-fasp@fasp.sra.ebi.ac.uk:/vol1/fastq/SRR309/006/SRR3099586/SRR3099586.fastq.gz
+SRR3099585	STANDARD	LIGHT	9H	CondB	ftp.sra.ebi.ac.uk/vol1/fastq/SRR309/005/SRR3099585/SRR3099585.fastq.gz	era-fasp@fasp.sra.ebi.ac.uk:/vol1/fastq/SRR309/005/SRR3099585/SRR3099585.fastq.gz

@@ -23,6 +23,8 @@ library(colourpicker)
 library(shinyjs)
 library(shinycssloaders)
 
+cat("Copy this adress in your favorite browser : http://localhost:8888/rstudio/p/4444/", file = stderr())
+
 ################################################################################
 # UI
 ################################################################################

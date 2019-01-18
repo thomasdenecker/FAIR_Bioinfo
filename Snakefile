@@ -40,7 +40,7 @@ GENOME = WDIR + "/genome/O.tauri_genome.fna"
 ##----------------------------------------------------------------------------##
 ## The list of samples to be processed
 ##----------------------------------------------------------------------------##
-SAMPLES, = glob_wildcards("./samples/{smp}.fastq")
+SAMPLES, = glob_wildcards("./samples/{smp}.fastq.gz")
 NB_SAMPLES = len(SAMPLES)
 
 ##----------------------------------------------------------------------------##
@@ -59,7 +59,7 @@ rule final:
 ##----------------------------------------------------------------------------##
 
 rule fastqc:
-        input:  "samples/{smp}.fastq"
+        input:  "samples/{smp}.fastq.gz"
         output: "fastqc/{smp}/{smp}_fastqc.zip"
         message: """--- Quality check of raw data with Fastqc."""
         shell: """
@@ -89,7 +89,7 @@ rule bowtie2Build:
 
 rule bowtie2:
     input:
-        file = "samples/{smp}.fastq",
+        file = "samples/{smp}.fastq.gz",
          bt2 = "reference/reference.rev.2.bt2"
     params:
         index = 'reference/reference'
