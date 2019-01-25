@@ -64,4 +64,4 @@ Quasi-rien ... Savoir taper sur un clavier ?
 
 **Orateur :** Thomas Denecker
 
-**Slides :** [Git/Github](https://thomasdenecker.github.io/Club-Bioinfo/docs/session2.html)
+**Slides :** [Session 2](https://thomasdenecker.github.io/Club-Bioinfo/docs/session2.html)
