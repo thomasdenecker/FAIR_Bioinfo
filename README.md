@@ -13,7 +13,7 @@ Vous trouverez ici des communications réalisées lors des sessions FAIR_bioinfo
 
 **Objectifs**
 
-L'objectif est de proposer et d'utiliser un panel d'outils permettant la réalisation d'un projet complet de bio-info en partant de rien et aboutissant à la création d'un conteneur (technologie Docker). Le partage, la valorisation et l'analyse dynamique des données seront inclus dans le panel. 
+L'objectif est de proposer et d'utiliser un panel d'outils permettant la réalisation d'un projet complet de bio-info en partant de rien et aboutissant à la création d'un conteneur (technologie Docker). Le partage, la valorisation et l'analyse dynamique des données seront inclus dans le panel.
 FAIR correspond à l'acronyme anglais "Findable, Accessible, Interoperable, & Reusable", initialement défini pour les données mais que nous détournons ici pour leurs protocoles d'analyse.
 Le projet support est une étude "d'expression différentielle de gènes" à partir de données RNAseq d'O.tauri.
 
@@ -49,8 +49,7 @@ Quasi-rien ... Savoir taper sur un clavier ?
 ## Ce n'est pas de la magie
 
 **Nouveaux outils pour la session**
-- Git
-- Github
+- Terminal
 
 **Programme :**
 - Présentation du projet et de l'application finale
@@ -65,4 +64,4 @@ Quasi-rien ... Savoir taper sur un clavier ?
 
 **Orateur :** Thomas Denecker
 
-**Slides :** 
+**Slides :** [Git/Github](https://thomasdenecker.github.io/Club-Bioinfo/docs/session2.html)
