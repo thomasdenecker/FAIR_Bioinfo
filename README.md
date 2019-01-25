@@ -45,3 +45,24 @@ Quasi-rien ... Savoir taper sur un clavier ?
 **Slides :** [Git/Github](https://thomasdenecker.github.io/Club-Bioinfo/docs/git-github.html)
 
 **Wiki  :** [Git](https://github.com/thomasdenecker/Club-Bioinfo/wiki/Git), [Github](https://github.com/thomasdenecker/Club-Bioinfo/wiki/Github) et [Markdown](https://github.com/thomasdenecker/Club-Bioinfo/wiki/Markdown)
+
+## Ce n'est pas de la magie
+
+**Nouveaux outils pour la session**
+- Git
+- Github
+
+**Programme :**
+- Présentation du projet et de l'application finale
+- Présentation des données
+- Présentation du workflow de l'analyse
+- Ouvrir un terminal (Mac Os, Ubuntu ou Windows)
+- Initialisation du projet sur Git/Github
+- Premier script shell : création de l'arborescence du projet
+- Amélioration du script shell : récupération des données
+
+**Date :** 25/01/2019
+
+**Orateur :** Thomas Denecker
+
+**Slides :** 
