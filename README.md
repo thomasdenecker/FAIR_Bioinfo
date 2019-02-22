@@ -44,7 +44,7 @@ Quasi-rien ... Savoir taper sur un clavier ?
 
 **Slides :** [Git/Github](https://thomasdenecker.github.io/Club-Bioinfo/docs/git-github.html)
 
-**Wiki  :** [Git](https://github.com/thomasdenecker/Club-Bioinfo/wiki/Git), [Github](https://github.com/thomasdenecker/Club-Bioinfo/wiki/Github) et [Markdown](https://github.com/thomasdenecker/Club-Bioinfo/wiki/Markdown)
+**Wiki  :** [Git](https://github.com/thomasdenecker/FAIR_Bioinfo/wiki/Git), [Github](https://github.com/thomasdenecker/FAIR_Bioinfo/wiki/Github) et [Markdown](https://github.com/thomasdenecker/FAIR_Bioinfo/wiki/Markdown)
 
 ## Ce n'est pas de la magie
 
@@ -64,13 +64,13 @@ Quasi-rien ... Savoir taper sur un clavier ?
 
 **Orateur :** Thomas Denecker
 
-**Slides :** [Git/Github](https://thomasdenecker.github.io/Club-Bioinfo/docs/session2.html)
+**Slides :** [Session 2](https://thomasdenecker.github.io/FAIR_Bioinfo/docs/session2.html)
 
 ## Installer et jouer avec les outils d'analyse
 
 **Nouveaux outils pour la session**
 - conda
-- quelques outils d'analyse pour des données RNAseq 
+- quelques outils d'analyse pour des données RNAseq
 
 **Programme :**
 - Présentation des outils du workflow (FastQC, Bowtie2, Samtools, HTseq-Count)
@@ -84,4 +84,4 @@ Quasi-rien ... Savoir taper sur un clavier ?
 
 **Orateur :** Thomas Denecker & Claire Toffano
 
-**Slides :** [Git/Github](https://thomasdenecker.github.io/Club-Bioinfo/docs/session3.html)
+**Slides :** [Session 3](https://thomasdenecker.github.io/FAIR_Bioinfo/docs/session3.html)
