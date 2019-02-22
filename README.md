@@ -65,3 +65,23 @@ Quasi-rien ... Savoir taper sur un clavier ?
 **Orateur :** Thomas Denecker
 
 **Slides :** [Git/Github](https://thomasdenecker.github.io/Club-Bioinfo/docs/session2.html)
+
+## Installer et jouer avec les outils d'analyse
+
+**Nouveaux outils pour la session**
+- conda
+- quelques outils d'analyse pour des données RNAseq 
+
+**Programme :**
+- Présentation des outils du workflow (FastQC, Bowtie2, Samtools, HTseq-Count)
+- Installation de FastQC à la main
+- Présentation de conda
+- Script pour l'installation de FastQC avec conda
+- Amélioration du script d'installation : ajout des autres outils (travail à la maison)
+- Amélioration du script d'analyse : workflow d'analyse à faire en boucle pour chaque échantillon (à faire tourner à la maison)
+
+**Date :** 22/02/2019
+
+**Orateur :** Thomas Denecker & Claire Toffano
+
+**Slides :** [Git/Github](https://thomasdenecker.github.io/Club-Bioinfo/docs/session3.html)
