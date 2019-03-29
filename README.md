@@ -85,3 +85,22 @@ Quasi-rien ... Savoir taper sur un clavier ?
 **Orateur :** Thomas Denecker & Claire Toffano
 
 **Slides :** [Session 3](https://thomasdenecker.github.io/FAIR_Bioinfo/docs/session3.html)
+
+## Une virée en mer
+
+**Nouveaux outils pour la session**
+- Docker
+- Cloud IFB
+
+**Programme :**
+- Présentation de docker
+- Ecriture du dockerfile
+- Utilisation du docker avec le script d'analyse
+- Partager le docker : Docker Hub
+- Pourquoi ? utilisation dans un cloud (ex. IFB)
+
+**Date :** 29/03/2019
+
+**Orateur :** Thomas Denecker
+
+**Slides :** [Session 4](https://thomasdenecker.github.io/FAIR_Bioinfo/docs/session4.html)
