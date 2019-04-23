@@ -51,8 +51,7 @@ rule final:
     input:
         expand("fastqc/{smp}/{smp}_fastqc.zip", smp=SAMPLES),
         expand("htseq/count_{smp}.txt", smp=SAMPLES),
-        expand("graphics/graphics-{smp}.pdf", smp=SAMPLES),
-        expand("countTable.txt")
+        expand("graphics/graphics-{smp}.pdf", smp=SAMPLES)
 
 ##----------------------------------------------------------------------------##
 ## Fastqc
@@ -155,20 +154,4 @@ rule graphics:
     message: "--- Histogram"
     shell: """
     Rscript ../R-code/graphics.R {input}
-    """
-
-##----------------------------------------------------------------------------##
-## Rscript
-##----------------------------------------------------------------------------##
-
-rule CountTable:
-    input:
-        "../conditions.txt"
-    output:
-        "countTable.txt"
-    params:
-        GFF
-    message: "--- Create count table"
-    shell: """
-    Rscript ../R-code/countTable.R
     """
