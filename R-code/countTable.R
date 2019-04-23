@@ -43,4 +43,4 @@ countTable = countTable[,-1]
 countTable = data.matrix(countTable)
 countTable = countTable[ -which(rownames(countTable) %in% c("__no_feature", "__ambiguous", "__too_low_aQual", "__not_aligned", "__alignment_not_unique")), ]
 
-write.table(countTable, "countTable.txt", quote = F, sep = "\t")
+write.table(countTable, "/home/rstudio/Project/countTable.txt", quote = F, sep = "\t")
