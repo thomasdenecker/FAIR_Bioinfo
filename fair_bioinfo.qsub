@@ -1,0 +1,10 @@
+#!/bin/sh
+#PBS -q lowprio
+#PBS -l select=1:ncpus=6
+#PBS -e qsub.err
+#PBS -o qsub.out
+
+echo "start job"
+cd /home/thomas.denecker/FAIR_Bioinfo/
+singularity exec -B /home/thomas.denecker/FAIR_Bioinfo/:/home/rstudio fair_bioinfo.simg bash ./FAIR_script.sh
+echo "end job"
