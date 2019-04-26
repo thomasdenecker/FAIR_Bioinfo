@@ -124,4 +124,4 @@ _Le cluster de calcul_
 
 **Orateur :** Thomas Denecker
 
-**Slides :** [Session 5](https://thomasdenecker.github.io/FAIR_Bioinfo/docs/session5.html)
+**Slides :** [Session 5](https://thomasdenecker.github.io/FAIR_Bioinfo/docs/session4.html)
