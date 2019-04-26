@@ -104,3 +104,24 @@ Quasi-rien ... Savoir taper sur un clavier ?
 **Orateur :** Thomas Denecker
 
 **Slides :** [Session 4](https://thomasdenecker.github.io/FAIR_Bioinfo/docs/session4.html)
+
+## I've got the power !
+
+**Programme :**
+
+_La parallélisation_
+   - Snakemake
+   - Comparaison avec le script.sh
+
+_Le cluster de calcul_
+
+   - C'est quoi?
+   - Cluster de l'IFB / I2BC
+   - Singularity ↔ Docker
+   - Exemple sur l'IFB et l'I2BC
+
+**Date :** 26/04/2019
+
+**Orateur :** Thomas Denecker
+
+**Slides :** [Session 5](https://thomasdenecker.github.io/FAIR_Bioinfo/docs/session5.html)
