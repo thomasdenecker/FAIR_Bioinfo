@@ -125,3 +125,28 @@ _Le cluster de calcul_
 **Orateur :** Thomas Denecker
 
 **Slides :** [Session 5](https://thomasdenecker.github.io/FAIR_Bioinfo/docs/session5.html)
+
+## LoveR
+
+**Programme :**
+
+_Rappel R_
+
+_Le package Shiny_
+   - Import d'un fichier
+   - Affichage d'un tableau
+   - Connection tableau <-> graphique
+   - Graphique R de base avec paramétrage
+
+
+_Teasing de la puissance de R_
+ - Exploration des données : dplyr  
+ - Réalisation de graphiques : plotly, google chart, ggplot2
+ - Lecture de fichiers spéciaux : fasta, fastq, excel
+ - Croisement de jeux de données : upset R
+
+**Date :** 24/05/2019
+
+**Orateur :** Thomas Denecker
+
+**Slides :** [Session 6](https://thomasdenecker.github.io/FAIR_Bioinfo/docs/session6.html)
