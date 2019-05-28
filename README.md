@@ -158,9 +158,8 @@ _Teasing de la puissance de R_
 _Markdown_
 
 _Jupyter / Jupyterlab_
-
-    - Docker Jupyter
-    - Mise en ligne avec Binder
+ - Docker Jupyter
+ - Mise en ligne avec Binder
 
 _Rmarkdown_
 
