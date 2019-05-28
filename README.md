@@ -150,3 +150,26 @@ _Teasing de la puissance de R_
 **Orateur :** Thomas Denecker
 
 **Slides :** [Session 6](https://thomasdenecker.github.io/FAIR_Bioinfo/docs/session6.html)
+
+## Notebooks
+
+**Programme :**
+
+_Markdown_
+
+_Jupyter / Jupyterlab_
+
+    - Docker Jupyter
+    - Mise en ligne avec Binder
+
+_Rmarkdown_
+
+_Générer le notebook de l'application shiny_
+
+**Date :** 21/06/2019
+
+**Orateur :** Thomas Denecker
+
+**Slides :** 
+
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/thomasdenecker/FAIR_Bioinfo/blob/master/exempleJupyterBinder.ipynb/master)
