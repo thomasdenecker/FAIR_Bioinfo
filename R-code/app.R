@@ -161,6 +161,12 @@ body <- dashboardBody(
                      h3("File preview"),
                      dataTableOutput(outputId = "contents_countTable"))
             ),
+            
+            h3("Parameters"),
+            fileInput("ParamsFile",label = NULL,
+                      buttonLabel = "Browse...",
+                      placeholder = "No file selected"),
+            
             div(actionButton("run", "Run", class="myBtn"), align = "center")
             
     ),
@@ -427,15 +433,15 @@ body <- dashboardBody(
             ),
 
             fluidRow(
-              column(3,h4("logFC theshold"),numericInput('logFC', NA, 2,
+              column(3,h4("logFC threshold"),numericInput('logFC', NA, 2,
                                                          min = 0, max = 100, step = 0.01)),
               column(9, h4("Documentation"), 
-                     p('logFC theshold')
+                     p('logFC threshold')
               )
             ),
             
             fluidRow(
-              column(3,h4("logFC theshold"),selectInput("pAdjustMethod",label = NULL, choices = c(holm = "holm", hochberg = "hochberg", hommel = "hommel", bonferroni = "bonferroni", 
+              column(3,h4("Pvalue adjustement"),selectInput("pAdjustMethod",label = NULL, choices = c(holm = "holm", hochberg = "hochberg", hommel = "hommel", bonferroni = "bonferroni", 
                                                                                                   BH = "BH", BY = "BY", fdr = "fdr", none = "none"), 
                                                         selected = "BH")),
               column(9, h4("Documentation"), 
@@ -471,6 +477,16 @@ body <- dashboardBody(
               It is important to save them if one wants to re-perform the analysis in the same conditions."),
             uiOutput("sessionText")
     ), 
+    
+    #---------------------------------------------------------------------------
+    # Session section
+    #---------------------------------------------------------------------------
+    tabItem(tabName = "report",
+            h2("Generate report file"),
+            p("Creating an analysis report using Rmarkdown"),
+            downloadButton("reportBTN", "Generate report")
+    ), 
+    
     
     #---------------------------------------------------------------------------
     # Bibliography section
@@ -529,6 +545,7 @@ server <- function(input, output, session) {
           menuItem("Differential analysis", tabName = "diffAna", icon = icon("sliders-h")),
           menuItem("Parameters", tabName = "parameters", icon = icon("wrench")),
           menuItem("Session information", tabName = "session", icon = icon("cubes")),
+          menuItem("Report", tabName = "report", icon = icon("file")),
           menuItem("Bibliography", tabName = "biblio", icon = icon("book"))
         )
       })
@@ -557,6 +574,7 @@ server <- function(input, output, session) {
     color$colConds[which(data$conds  == "CondB")] = input$colCondB
   })
   
+
   
   observeEvent(input$colHisto,{
     color$hist = input$colHisto
@@ -619,7 +637,8 @@ server <- function(input, output, session) {
   
   observeEvent(input$run, {
     withProgress(message = 'Making plot', value = 0, {
-      n <- 6
+      data$date = format(Sys.time(), "%Y_%m_%d__%H_%M_%S")
+      n <- 7
       #-------------------------------------------------------------------------
       # Read data
       #-------------------------------------------------------------------------
@@ -637,6 +656,24 @@ server <- function(input, output, session) {
                                    sep = input$sep_CT,
                                    quote = input$quote_CT
       )
+      
+      incProgress(1/n, detail = "Read parameters")
+      if(!is.null(input$ParamsFile$datapath)){
+        data$Params <- read.csv2(input$ParamsFile$datapath,
+                                 header = T,
+                                 sep = "\t",
+                                 quote = ""
+        )
+        
+        colourpicker::updateColourInput(session, "colHisto", value = data$Params[1,2])
+        colourpicker::updateColourInput(session, "colCondA", value = data$Params[2,2])
+        colourpicker::updateColourInput(session, "colCondB", value = data$Params[3,2])
+        updateSelectInput(session, "fitType",  selected = data$Params[4,2])
+        updateNumericInput(session, "pvalue", value = data$Params[5,2])
+        updateNumericInput(session, "logFC", value = data$Params[6,2])
+        updateSelectInput(session, "pAdjustMethod",  selected = data$Params[7,2])
+      }
+      
       
       incProgress(1/n, detail = "Summaryze")
       data$summary <- do.call(cbind, lapply(data$countTable, summary))
@@ -671,6 +708,7 @@ server <- function(input, output, session) {
     data$run = T
   })
   
+
   
   #-----------------------------------------------------------------------------
   # Parameters - Deseq2
@@ -936,6 +974,35 @@ server <- function(input, output, session) {
                                                searchHighlight = TRUE,
                                                dom = 'Bfrtip',
                                                buttons = c('csv', 'excel','print')))
+  
+  #-----------------------------------------------------------------------------
+  # Report
+  #-----------------------------------------------------------------------------
+  output$reportBTN <- downloadHandler(
+    filename = paste0("report_",data$date,".html"),
+    content = function(file) {
+      params <- list(si = si,
+                     date = data$date,
+                     dataCondition = data$conditions,
+                     dataCountTable = data$countTable,
+                     dataSummary = data$summary,
+                     colorColConds = color$colConds,
+                     deseqRV_resDESeq = deseqRV$resDESeq, 
+                     logFC= input$logFC,
+                     pvalue= input$pvalue,
+                     tableParams=  c(ColHisto = input$colHisto,
+                                     ColCondA = input$colCondA,
+                                     ColCondB = input$colCondB,
+                                     fitType = input$fitType,
+                                     pvalue = input$pvalue,
+                                     logFC= input$logFC,
+                                     pAdjustMethod = input$pAdjustMethod))
+      rmarkdown::render("report.Rmd", output_file = file,
+                        params = params,
+                        envir = new.env(parent = globalenv())
+      )
+    }
+  )
   
 }
 

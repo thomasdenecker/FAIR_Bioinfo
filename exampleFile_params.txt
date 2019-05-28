@@ -1,0 +1,8 @@
+Params	Values
+ColHisto	#1D4F61
+ColCondA	#00FF73
+ColCondB	#E3424D
+fitType	mean
+pvalue	2
+logFC	5
+pAdjustMethod	hochberg

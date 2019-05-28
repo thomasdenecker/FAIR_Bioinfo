@@ -1,0 +1,108 @@
+---
+title: "FAIR_Bioinfo analysis"
+params:
+  dataCondition: NA
+  si: NA
+  colorColConds: NA
+  dataSummary: NA
+  dataCountTable : NA
+  deseqRV_resDESeq: NA
+  pvalue: NA
+  logFC: NA
+  tableParams: NA
+  date: NA
+  
+output:
+  html_document:
+    df_print: paged
+---
+
+# Description of raw data
+
+The objective of this application is to find the differentially expressed genes after using the FAIR_Bioinfo workflow
+
+## Conditions
+
+The count data files and associated biological conditions are listed in the following table :
+
+```{r echo = F}
+params$dataCondition
+```
+
+
+## Count table
+
+After loading the data we first have a look at the raw data table itself. The data table contains one row per annotated feature and one column per sequenced sample. Row names of this table are feature IDs (unique identifiers). The table contains raw count values representing the number of reads that map onto the features. For this project, there are 7659 features in the count data table.
+
+```{r echo = F}
+params$dataCountTable
+```
+
+Looking at the summary of the count table provides a basic description of these raw counts (min and max values, median, etc).
+
+```{r echo = F}
+params$dataSummary
+```
+
+## Total read count per sample
+Next figure shows the total number of mapped reads for each sample. Reads that map on multiple locations on the transcriptome are counted more than once, as far as they are mapped on less than 50 different loci. We expect total read counts to be similar within conditions, they may be different across conditions. Total counts sometimes vary widely between replicates. This may happen for several reasons, including:
+
+- different rRNA contamination levels between samples (even between biological replicates);
+- slight differences between library concentrations, since they may be difficult to measure with high precision.;
+
+```{r echo = F}
+    barplot(colSums(params$dataCountTable), ylab = "Total read count per sample",
+            main = "Total read count", col = params$colorColConds,
+            names = colnames(params$dataCountTable))
+```
+
+[...]
+
+## Volcano plot
+
+
+```{r echo = F}
+inter = cbind(x = params$deseqRV_resDESeq$log2FoldChange,
+              y = -log10(params$deseqRV_resDESeq$padj), 
+              feature = rownames(params$deseqRV_resDESeq), 
+              SE = params$deseqRV_resDESeq$lfcSE)
+    inter = na.omit(inter)
+    inter = as.data.frame(inter)
+    inter[,1] = as.numeric(as.character(inter[,1]))
+    inter[,2] = as.numeric(as.character(inter[,2]))
+    
+    color = rep("black", nrow(inter))
+    pos = which(abs(inter$x) >= params$logFC & inter$y >= -log10(params$pvalue))
+    color[pos] = "red"
+    
+    plot_ly(inter, x = ~x, y = ~y, type = 'scatter', mode = 'markers',
+            text = ~paste("Feature: ", feature, '<br>lfcSE:', SE),
+            marker = list(color = color)) %>%
+      layout(title = 'Volcano plot',
+             shapes=list(list(type='line', x0=min(inter$x)-1, x1= max(inter$x)+1, y0=-log10(params$pvalue), y1=-log10(params$pvalue), line=list(dash='dot', width=1)),
+                         list(type='line', x0=-params$logFC, x1= -params$logFC, y0=0, y1=max(inter$y), line=list(dash='dot', width=1)),
+                         list(type='line', x0=params$logFC, x1= params$logFC, y0=0, y1=max(inter$y), line=list(dash='dot', width=1))),
+             yaxis = list(zeroline = FALSE, title= "-log10(adjusted pvalue)"),
+             xaxis = list(zeroline = FALSE, title= "log2(fold change)"))
+    
+```
+
+# Parameters
+
+```{r echo = F}
+params$tableParams
+
+inter = cbind(names(params$tableParams),params$tableParams)
+colnames(inter) = c("Params", "Values")
+write.table( inter, paste0("params_",params$date,".txt"), 
+            sep = "\t",
+            quote = F, row.names = F)
+```
+
+# R session information
+
+The versions of the R software and Bioconductor packages used for this analysis are listed below. It is important to save them if one wants to re-perform the analysis in the same conditions.
+
+```{r echo = F}
+params$si
+```
