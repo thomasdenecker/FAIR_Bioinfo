@@ -171,4 +171,4 @@ _Générer le notebook de l'application shiny_
 
 **Slides :** 
 
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/thomasdenecker/FAIR_Bioinfo/blob/master/exempleJupyterBinder.ipynb/master)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/thomasdenecker/FAIR_Bioinfo/master?filepath=https%3A%2F%2Fgithub.com%2Fthomasdenecker%2FFAIR_Bioinfo%2Fblob%2Fmaster%2FexempleJupyterBinder.ipynb)
