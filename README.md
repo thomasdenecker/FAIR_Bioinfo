@@ -1,4 +1,5 @@
 # Welcome !
+[![DOI](https://zenodo.org/badge/164655551.svg)](https://zenodo.org/badge/latestdoi/164655551)
 
 **Bienvenue à FAIR_bioinfo**
 
