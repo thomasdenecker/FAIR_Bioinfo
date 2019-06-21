@@ -170,6 +170,6 @@ _Générer le notebook de l'application shiny_
 
 **Orateur :** Thomas Denecker
 
-**Slides :**
+**Slides :** [Session 7](https://thomasdenecker.github.io/FAIR_Bioinfo/docs/session7.html)
 
-Example : [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/thomasdenecker/notebookJupyter/master)
+**Example :** [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/thomasdenecker/notebookJupyter/master)
