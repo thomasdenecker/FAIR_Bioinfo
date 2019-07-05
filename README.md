@@ -173,3 +173,23 @@ _Générer le notebook de l'application shiny_
 **Slides :** [Session 7](https://thomasdenecker.github.io/FAIR_Bioinfo/docs/session7.html)
 
 **Example :** [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/thomasdenecker/notebookJupyter/master)
+
+## Achever un projet reproductible
+
+**Programme :**
+
+_Exposer son projet_
+ - Une vitrine sur web : Github pages
+ - Ajouter une licence
+ - Versionner son projet : Release
+ - Obtenir un DOI : Zenodo
+
+_Et maintenant ?_
+ - Encore plus loin dans la reproductibilité
+ - Limites de notre solution
+
+**Date :** 05/07/2019
+
+**Orateur :** Thomas Denecker
+
+**Slides :** [Session 8](https://thomasdenecker.github.io/FAIR_Bioinfo/docs/session8.html)
