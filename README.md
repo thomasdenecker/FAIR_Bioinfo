@@ -1,11 +1,15 @@
 # Welcome !
 [![DOI](https://zenodo.org/badge/164655551.svg)](https://zenodo.org/badge/latestdoi/164655551)
+[![](https://images.microbadger.com/badges/image/tdenecker/fair_bioinfo.svg)](https://microbadger.com/images/tdenecker/fair_bioinfo)
+[![](https://img.shields.io/badge/LICENCE-CeCILL%202.1-brightgreen.svg)](https://github.com/thomasdenecker/FAIR_Bioinfo/blob/master/LICENCE)
+[![](https://img.shields.io/badge/Gitbook-FAIR_Bioinfo-blue.svg)](https://github.com/thomasdenecker/FAIR_Bioinfo/blob/master/LICENCE)
+
 
 **Bienvenue à FAIR_bioinfo**
 
-Vous trouverez ici des communications réalisées lors des sessions FAIR_bioinfo. Les communications sont en français. Tout le contenu présenté existe déjà en anglais sur internet. Nous proposons donc ici des ressources pour les francophones.
+FAIR_Bioinfo est une formation initialement pensée pour la communauté francophone. En effet, les ressources sont nombreuses concernant la reproductibilité en anglais mais un manque se faisait sentir en français. Vous trouverez tout le contenu du cours présenté dans les différentes sessions (slides en français). Nous proposons aussi la version retranscrite de ces cours au format gitbook en anglais : https://fair-bioinfo.gitbook.io/fair-bioinfo/
 
-*You will find here some communications made during the I2BC Bioinformatics Club. Communications will be mainly in French. All the content presented also exists in English on the Internet. Therefore, we propose here resources for Francophones.*
+*FAIR_Bioinfo is a training course initially designed for the French-speaking community. Indeed, there are many resources concerning reproducibility in English but there was a lack in French. You will find all the course content presented in the different sessions (slides in French). We also offer the transcribed version of these courses in gitbook format in English: https://fair-bioinfo.gitbook.io/fair-bioinfo/*
 
 **Informations pratiques**
 - Quand ? : le dernier vendredi après midi de chaque mois (sauf juillet à définir), rdv 12h30
