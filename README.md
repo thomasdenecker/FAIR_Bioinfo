@@ -2,10 +2,10 @@
 
 **FAIR_Bioinfo** - [![DOI](https://zenodo.org/badge/164655551.svg)](https://zenodo.org/badge/latestdoi/164655551)
 
-**Gitbook** - [![](https://img.shields.io/badge/Gitbook-FAIR_Bioinfo-blue.svg)](https://fair-bioinfo.gitbook.io/fair-bioinfo/) 
+**Gitbook** - [![](https://img.shields.io/badge/Gitbook-FAIR_Bioinfo-blue.svg)](https://fair-bioinfo.gitbook.io/fair-bioinfo/) [![](https://img.shields.io/badge/Github-FAIR_Bioinfo_Gitbook-blue.svg)](https://github.com/thomasdenecker/FAIR_Bioinfo-Gitbook) 
 [![DOI](https://zenodo.org/badge/197582632.svg)](https://zenodo.org/badge/latestdoi/197582632)
 
-**Docker image** - [![](https://images.microbadger.com/badges/image/tdenecker/fair_bioinfo.svg)](https://microbadger.com/images/tdenecker/fair_bioinfo)
+**Docker image** - [![](https://img.shields.io/badge/Docker-FAIR_Bioinfo-blue.svg)](https://hub.docker.com/r/tdenecker/fair_bioinfo) [![](https://images.microbadger.com/badges/image/tdenecker/fair_bioinfo.svg)](https://microbadger.com/images/tdenecker/fair_bioinfo) 
 
 **Licence** - [![](https://img.shields.io/badge/LICENCE-CeCILL%202.1-brightgreen.svg)](https://github.com/thomasdenecker/FAIR_Bioinfo/blob/master/LICENCE)
 
