@@ -1,0 +1,18 @@
+{
+  "@context": "https://raw.githubusercontent.com/codemeta/codemeta/master/codemeta.jsonld",
+  "@type": "Code",
+  "author": [
+     "Thomas Denecker",
+     "Claire Toffano-Nioche"
+  ],
+  "identifier": "https://doi.org/10.5281/zenodo.3341471",
+  "codeRepository": "https://github.com/thomasdenecker/FAIR_Bioinfo",
+  "datePublished": "2019-07-18",
+  "dateModified": "2019-07-18",
+  "dateCreated": "2019-07-18",
+  "description": "a turnkey training course and protocol for reproducible computational biology",
+  "keywords": "Reproducibility, Bioinformatics, Computational Biology, FAIR",
+  "license": "CeCILL 2.1",
+  "title": "FAIR_Bioinfo",
+  "version": "v1.2.0"
+}
