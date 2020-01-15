@@ -71,7 +71,7 @@ To illustrate FAIR principles for bioinformatics workflows, we used a classic RN
 
 # Instructor notes
 
-The training course is divided into 8 sessions, each one bringing an additional level of reproducibility to the global workflow. Table 1 shows the detailed program and learning objectives of each session.
+The training course is divided into 8 sessions, each one bringing an additional level of reproducibility to the global workflow. Each session lasted an hour and a half ; they were carried out at the rate of one session per month. Table 1 shows the detailed program and learning objectives of each session.
 
 **Table 1** : Overview of sessions
 
