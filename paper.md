@@ -21,7 +21,7 @@ bibliography: paper.bib
 
 # Summary
 
-Reproducibility plays an essential part in the success of a bioinformatics project. Indeed, Reproducibility makes it possible to guarantee the validity of scientific results and to simplify the dissemination of projects. To help disseminate Reproducibility principles among bioinformatics students, engineers and scientists, we created the Fair_bioinfo course, which presents a set of features we consider necessary to make a complete bioinformatics analysis reproducible. To illustrate the theoretical concepts of reproducibility, we use as an example a classic bioinformatics analysis (differential gene expression analysis from RNA-seq data). In short, we retrieve the data from public databases (ENA/SRA), we perform a reproducible analysis using a workflow management system (snakemake) in a virtual environment (Docker). The entire versioned (git) code is open source (Github https://github.com/thomasdenecker/FAIR_Bioinfo and dockerhub https://hub.docker.com/r/tdenecker/fair_bioinfo). The visualization of the results is dynamic (Shiny app) and the PDF or HTML report (Rmarkdown) provides the results of the analysis and lists all user-selected parameters.
+Reproducibility plays an essential part in the success of a bioinformatics project. Indeed, Reproducibility makes it possible to guarantee the validity of scientific results and to simplify the dissemination of projects. To help disseminate Reproducibility principles among bioinformatics students, engineers and scientists, we created the FAIR_Bioinfo course, which presents a set of features we consider necessary to make a complete bioinformatics analysis reproducible. To illustrate the theoretical concepts of reproducibility, we use as an example a classic bioinformatics analysis (differential gene expression analysis from RNA-seq data). In short, we retrieve the data from public databases (ENA/SRA), we perform a reproducible analysis using a workflow management system (snakemake) in a virtual environment (Docker). The entire versioned (git) code is open source (Github https://github.com/thomasdenecker/FAIR_Bioinfo and dockerhub https://hub.docker.com/r/tdenecker/fair_bioinfo). The visualization of the results is dynamic (Shiny app) and the PDF or HTML report (Rmarkdown) provides the results of the analysis and lists all user-selected parameters.
 
 # How to use
 
@@ -43,9 +43,11 @@ $ sudo docker exec -it fair_bioinfo bash ./FAIR_app.sh
 ```
 and used by copying http://localhost:8888/rstudio/p/4444/ into your browser.
 
+Note : The use of the `sudo` command is not necessary for Mac OS and Windows. The demonstrations of the course have been made on a Linux environment (Ubuntu 18.04).
+
 # Statement of Need
 
-Recent reanalyses of biology [@baker_monya_1500_2016] and computer science [@warren_repeatability_2015] papers found a staggering ratio of non-reproducible results. Our daily experience as bioinformaticians indicate the same issues exist in our field. It is therefore essential that good practices are implemented to ensure data integrity and reproducibility of analytical results. This course was created originally at the request of colleagues who wanted to be trained in reproducibility practices in their own language (french). We therefore created and delivered a set of training sessions in French, including a complete workflow and associated course materials available on Github (https://github.com/thomasdenecker/FAIR_Bioinfo). Following positive initial feedback and at the request of our English-speaking colleagues, we decided to translate the workflow documentation to english and to convert it into a Gitbook document (https://fair-bioinfo.gitbook.io/fair-bioinfo/).
+Recent reanalyses of biology [@baker_monya_1500_2016] and computer science [@warren_repeatability_2015] papers found a staggering ratio of non-reproducible results. Our daily experience as bioinformaticians indicate the same issues exist in our field. It is therefore essential that good practices are implemented to ensure data integrity and reproducibility of analytical results. This course was created originally at the request of colleagues who wanted to be trained in reproducibility practices in their own language (French). This course was born from the combination of our personal experiences in reproducibility acquired during our research work in Bioinformatics. We therefore created and delivered a set of training sessions in French, including a complete workflow and associated course materials available on Github (https://github.com/thomasdenecker/FAIR_Bioinfo). Following positive initial feedback and at the request of our English-speaking colleagues, we decided to translate the workflow documentation to english and to convert it into a Gitbook document (https://fair-bioinfo.gitbook.io/fair-bioinfo/).
 
 # Target audience
 
@@ -57,7 +59,7 @@ In this FAIR_Bioinfo training, we present a stepwise protocol to ensure the repr
 - **F**indable: The tools used are references in their field (bowtie2, samtools, HTseq-counts, ...)
 - **A**ccessible: Codes, slides, docker image are online (Github & Dockerhub)
 - **I**nteroperable: The different tools will communicate with each other (conda & snakemake)
-- **R**eusable / Reproductible: The workflow is saved in a file whose execution replays the entire analysis identically (Jupyter, Rmarkdown, ...)
+- **R**eusable / Reproducible: The workflow is saved in a file whose execution replays the entire analysis identically (Jupyter, Rmarkdown, ...)
 
 Our protocol  is composed of seven main steps which application gradually increases the level of reproducibility (Figure 1).
 
@@ -67,20 +69,24 @@ Our protocol  is composed of seven main steps which application gradually increa
 
 To illustrate FAIR principles for bioinformatics workflows, we used a classic RNA-seq data analysis workflow. Starting from raw data (FASTQ files), this analysis aims to identify genes that are differentially expressed between different conditions. The underlying biology is not detailed, as our focus is on the reproducibility aspects rather than the specific bioinformatics protocol or biological question. Eventually, the RNA-seq analysis protocol used as an example here could be replaced by any other type of bioinformatics analysis.
 
+# Instructor notes
+
 The training course is divided into 8 sessions, each one bringing an additional level of reproducibility to the global workflow. Table 1 shows the detailed program and learning objectives of each session.
 
 **Table 1** : Overview of sessions
 
 | Title         	| Session | Description | Tools |
 |-------------------|---------|-------------|-------|
-| The code memory   | 1   	| Initiation to code versioning | Git & Github |
-| This is not magic | 2   	| Open a terminal and retrieve data for the analysis pipeline (loop & variable concepts, bash command) | wget, ascp, md5sum |
+| This is not magic | 1   	| Open a terminal and retrieve data for the analysis pipeline (loop & variable concepts, bash command) | shell, wget, md5sum |
+| The code memory   | 2   	| Initiation to code versioning | Git & Github |
 | Play with analysis tools | 3   	| Implementation of a first part of the analysis pipeline from the fastq file to the count table | conda, third-party tools used for bioinformatics analysis (FastQC, bowtie2, samtools, HTseq-counts)  |
-| A trip to the sea | 4 | Control the computing environment using a container and compute a cloud platform | Docker |
-|  I've got the power! | 5 | Parallel computing and use of a computer cluster | Snakemake, slurm, Singularity |
+| A trip to the sea | 4 | Control the computing environment using a container and compute a cloud platform | Docker, ssh |
+| I've got the power! | 5 | Parallel computing and use of a computer cluster | Snakemake, slurm, Singularity, ascp |
 | LoveR | 6 | Upgrade to dynamic rendering using a web application and presentation of a few powerful R packages | Shiny, R packages |
 | Sharing results and protocols using notebooks | 7 | Creating an analysis report and sharing it | Jupyter & Rmarkdown |
-| Disseminate  your project | 8 | Disseminate a reproductible project. Perspective for improvement | Githubpages, License, Release, Zenodo |
+| Disseminate your project | 8 | Disseminate a reproducible project. Perspective for improvement | Githubpages, License, Release, Zenodo |
+
+The slides of each session are available on the FAIR_Bioinfo github in French. They have been translated into English and inserted as figures in the Gitbook. English speaking instructors can very easily create slides from the Gitbook and these figures.
 
 # Conclusion and Perspectives
 
