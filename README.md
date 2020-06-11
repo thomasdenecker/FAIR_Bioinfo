@@ -7,7 +7,14 @@
 
 **Docker image** - [![](https://img.shields.io/badge/Docker-FAIR_Bioinfo-blue.svg)](https://hub.docker.com/r/tdenecker/fair_bioinfo) [![](https://images.microbadger.com/badges/image/tdenecker/fair_bioinfo.svg)](https://microbadger.com/images/tdenecker/fair_bioinfo) 
 
-**Licence** - [![](https://img.shields.io/badge/LICENCE-CeCILL%202.1-brightgreen.svg)](https://github.com/thomasdenecker/FAIR_Bioinfo/blob/master/LICENCE)
+**Licence pour le code ** - [![](https://img.shields.io/badge/LICENCE-CeCILL%202.1-brightgreen.svg)](https://github.com/thomasdenecker/FAIR_Bioinfo/blob/master/LICENCE)
+
+**Licence pour le GitBook ** - 
+[![CC BY-SA 4.0][cc-by-sa-image]][cc-by-sa]
+
+[cc-by-sa]: http://creativecommons.org/licenses/by-sa/4.0/
+[cc-by-sa-image]: https://licensebuttons.net/l/by-sa/4.0/88x31.png
+[cc-by-sa-shield]: https://img.shields.io/badge/License-CC%20BY--SA%204.0-lightgrey.svg
 
 **Bienvenue à FAIR_bioinfo**
 
